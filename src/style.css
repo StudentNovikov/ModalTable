@@ -1,0 +1,125 @@
+:root {
+  --light-blue-color: #bee5eb;
+  --ligth-gray-color: rgb(248, 248, 248);
+  --gray-color: #e9eCeF;
+  --dark-gray-color: #ddd;
+  --green-color: #28a745;
+  --green-dark-color: #278838;
+  --green-light-color: #20c997;
+  --red-color: #dc3545;
+  --red-dark-color: #c82333;
+  --red-light-color: #ed99a2;
+}
+
+*{
+  padding:0;
+  margin:0;
+  box-sizing: border-box;
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+}
+
+.container{
+  width:80%;
+  margin:1rem auto;
+}
+
+/* Table styles */
+
+.table {
+  border-collapse: collapse;
+  text-align: center;
+  margin-bottom: 2rem;
+  width: 100%;
+}
+
+.table-title{
+  margin-bottom:2rem;
+}
+
+.table td, .table th{
+  border-top: 1px solid var(--dark-gray-color);
+  padding: 1rem;
+
+}
+
+.table tr:nth-child(even){
+  background-color: var(--ligth-gray-color);
+}
+
+.table tr:hover {
+  background-color: var(--light-blue-color)
+}
+
+.table thead th {
+  padding: 1.2rem 0;
+  background-color: var(--gray-color);
+}
+
+/* Filter styles */
+
+.filter-container{
+  display: flex;
+}
+
+input[type=text]{
+  font-size: 1rem;
+  width: 20%;
+  padding: 0.5rem 0.75rem;
+  margin: 0.5rem 0;
+  display: inline-block;
+  border: 1px solid var(--dark-gray-color);
+  border-radius: 4px;
+  box-sizing: border-box;
+  outline: none;
+}
+
+input[type=text]:focus{
+  background-color: var(--light-blue-color);
+}
+
+/* Button styles */
+.btn{
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  border: 1px solid transparent;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: .25rem;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  cursor: poiter;
+  color: #fff;
+}
+
+.btn-green{
+  background-color: var(--green-color);
+  border-color: var(--green-color);
+}
+
+.btn-green:hover{
+  background-color: var(--green-dark-color);
+  border-color: var(--green-dark-color);
+}
+
+.btn-green:focus {
+  outline: 5px auto var(--green-light-color);
+}
+
+.btn-red{
+  background-color: var(--red-color);
+  border-color: var(--red-color);
+}
+
+.btn-red:hover{
+  background-color: var(--red-dark-color);
+  border-color: var(--red-dark-color);
+}
+
+.btn-red:focus {
+  outline: 5px auto var(--red-light-color);
+}
+
+.move-right{
+  float: right;
+}
