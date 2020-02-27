@@ -120,6 +120,16 @@ input[type=text]:focus{
   outline: 5px auto var(--red-light-color);
 }
 
+/* Positioning styles */
 .move-right{
   float: right;
+}
+
+/* Edit-Update form styles */
+.add-update{
+  width:450px;
+  border-radius: 1rem;
+  min-height: 500px;
+  margin:0 auto;
+  border:1px solid var(--red-light-color);
 }
