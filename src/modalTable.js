@@ -38,7 +38,9 @@ class ModalTable {
   }
 
   createTableContainer() {
-    console.log('creatingTableContainer');
+    this.rootRef.innerHTML += '<div class="table-container"></div>';
+    this.tableRef = this.rootRef.querySelector('.table-container');
+    console.log(this.tableRef);
   }
 
   hideTableContainer() {
