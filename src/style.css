@@ -18,7 +18,7 @@
   font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
 }
 
-.container{
+.table-container{
   width:80%;
   margin:1rem auto;
 }
@@ -61,7 +61,7 @@
   display: flex;
 }
 
-input[type=text], input[type=number], input[type=datetime-local]{
+input[type=text], input[type=number], input[type=datetime-local], input[type=checkbox]{
   font-size: 1rem;
   padding: 0.5rem 0.75rem;
   margin: 0.5rem 0;
@@ -86,7 +86,7 @@ input[type=text]:focus, input[type=number]:focus, input[type=datetime-local]:foc
   line-height: 1.5;
   border-radius: .25rem;
   transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-  cursor: poiter;
+  cursor: pointer;
   color: #fff;
 }
 
@@ -135,6 +135,24 @@ input[type=text]:focus, input[type=number]:focus, input[type=datetime-local]:foc
 .separator{
   min-height: 3rem;
 }
+
+.my-1{
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.inline-block{
+  display: inline-block;
+}
+
+.va-sub{
+  vertical-align: sub;
+}
+
+.va-bottom{
+  vertical-align: bottom;
+}
+
 /* Edit-Update form styles */
 .add-update{
   padding:2rem;
@@ -142,4 +160,5 @@ input[type=text]:focus, input[type=number]:focus, input[type=datetime-local]:foc
   border-radius: 1rem;
   margin:0 auto;
   border:1px solid var(--light-blue-color);
+  box-shadow: inset 0px 0px 5px rgba(0,0,0,0.1);
 }

@@ -7,7 +7,7 @@
   <title>Document</title>
 </head>
 <body>
-  <div class="container">
+  <div class="table-container">
     <h3 class="table-title">Table #1</h3>
     <div class="filter-container">
       <input type="text" placeholder="Type your filter here...">
@@ -92,8 +92,8 @@
       </tbody>
     </table>
 
-    <button class="btn btn-green">Add Row</button>
-    <button class="btn btn-red btn-right move-right">Close</button>
+    <button class="btn btn-green" id="addRow">Add Row</button>
+    <button class="btn btn-red btn-right move-right" id="closeTable">Close</button>
   </div>
   <hr>
   <div class="separator"></div>
@@ -107,10 +107,13 @@
       <input type="number" name="inputSerialNumber" id="count">
       <p><label for="price">Price:</label></p>
       <input type="text" name="inputPrice" id="price">
+      <br>
+      <label for="isAvaliable" class="my-1 inline-block va-sub">Is Avaliable:</label>
+      <input type="checkbox" name="inputIsAvaliable" value="isAvaliable">
       <p><label for="date">Date:</label></p>
       <input type="datetime-local" name="inputDate" id="date">
       <br>
-      <input class="btn btn-green mt-1" type="submit" value="Add / Update">
+      <input class="btn btn-green mt-1" type="submit" value="Add / Update" id="addUpdate">
      </form>
   </div>
   <div class="separator"></div>
