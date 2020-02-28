@@ -28,8 +28,47 @@ class ModalTable {
   }
 
   drawTable() {
-    console.log('drawing table');
+    this.createTableContainer();
+    this.hideTableContainer();
+    this.drawTitle();
+    this.drawFilter();
+    this.drawHead();
+    this.drawBody();
+    this.drawButtons();
   }
+
+  createTableContainer() {
+    console.log('creatingTableContainer');
+  }
+
+  hideTableContainer() {
+    console.log('hidingTableContainer');
+  }
+
+  showTableContainer() {
+    console.log('showingTableContainer');
+  }
+
+  drawTitle() {
+    console.log('drawingTitle');
+  }
+
+  drawFilter() {
+    console.log('drawFilter');
+  }
+
+  drawHead() {
+    console.log('drawHead');
+  }
+
+  drawBody() {
+    console.log('drawBody');
+  }
+
+  drawButtons() {
+    console.log('drawButtons');
+  }
+
 
   drawUpdateAddForm() {
     console.log('drawingUpdateAddForm');
