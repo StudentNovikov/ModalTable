@@ -61,19 +61,17 @@
   display: flex;
 }
 
-input[type=text]{
+input[type=text], input[type=number], input[type=datetime-local]{
   font-size: 1rem;
-  width: 20%;
   padding: 0.5rem 0.75rem;
   margin: 0.5rem 0;
-  display: inline-block;
   border: 1px solid var(--dark-gray-color);
   border-radius: 4px;
   box-sizing: border-box;
   outline: none;
 }
 
-input[type=text]:focus{
+input[type=text]:focus, input[type=number]:focus, input[type=datetime-local]:focus {
   background-color: var(--light-blue-color);
 }
 
@@ -107,6 +105,7 @@ input[type=text]:focus{
 }
 
 .btn-red{
+  padding: .375rem 1.75rem;
   background-color: var(--red-color);
   border-color: var(--red-color);
 }
@@ -125,11 +124,22 @@ input[type=text]:focus{
   float: right;
 }
 
+.mt-1{
+  margin-top: 1rem;
+}
+
+.mt-2{
+  margin-top: 2rem;
+}
+
+.separator{
+  min-height: 3rem;
+}
 /* Edit-Update form styles */
 .add-update{
-  width:450px;
+  padding:2rem;
+  width:400px;
   border-radius: 1rem;
-  min-height: 500px;
   margin:0 auto;
-  border:1px solid var(--red-light-color);
+  border:1px solid var(--light-blue-color);
 }
