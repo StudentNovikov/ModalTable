@@ -11,7 +11,7 @@ class ModalTable {
     this.tableId = ModalTable.id + 1;
     ModalTable.id += 1;
     this.createRootContainer();
-    this.addButtonTableShow();
+    this.addButtonShowTable();
     this.drawTable();
     this.drawUpdateAddForm();
     this.subscribeToEvents();
@@ -23,7 +23,7 @@ class ModalTable {
     this.rootRef = document.getElementById(containerIndex);
   }
 
-  addButtonTableShow() {
+  addButtonShowTable() {
     const buttonIndex = 'showTable';
     this.rootRef.innerHTML = `<button class="btn btn-green" id="${buttonIndex}">${this.tableTitle}</button>`;
     this.buttonShowTableRef = this.rootRef.getElementById(buttonIndex);
