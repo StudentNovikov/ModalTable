@@ -3,21 +3,30 @@ class ModalTable {
   constructor(tableTitle, products, placeForButton) {
     this.tableTitle = tableTitle;
     this.products = products;
-    this.rootDirectory = document.getElementById(placeForButton);
+    this.placeForButton = placeForButton;
     this.init();
   }
 
   init() {
     this.tableId = ModalTable.id + 1;
     ModalTable.id += 1;
+    this.createRootContainer();
     this.addButtonTableShow();
     this.drawTable();
     this.drawUpdateAddForm();
     this.subscribeToEvents();
   }
 
+  createRootContainer() {
+    const containerIndex = `tableContainer${this.tableId}`;
+    document.getElementById(this.placeForButton).innerHTML = `<div id="${containerIndex}"></div>`;
+    this.rootRef = document.getElementById(containerIndex);
+  }
+
   addButtonTableShow() {
-    console.log('added buttons');
+    const buttonIndex = 'showTable';
+    this.rootRef.innerHTML = `<button class="btn btn-green" id="${buttonIndex}">${this.tableTitle}</button>`;
+    this.buttonShowTableRef = this.rootRef.getElementById(buttonIndex);
   }
 
   drawTable() {

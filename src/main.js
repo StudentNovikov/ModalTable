@@ -1,6 +1,6 @@
 import { ModalTable } from './modalTable.js';
 
-const firstTable = new ModalTable('table1', [{
+const firstTable = new ModalTable('Table from class #1', [{
   name: 'Shoes',
   serialNumber: 7064903200,
   count: 4,
@@ -21,4 +21,4 @@ const firstTable = new ModalTable('table1', [{
   price: 12.00,
   isAvaliable: true,
   dateModified: '11.10.2020 10:57',
-}],'placeForTable1');
+}], 'placeForTable1');
