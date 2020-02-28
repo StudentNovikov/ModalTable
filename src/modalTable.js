@@ -18,15 +18,13 @@ class ModalTable {
   }
 
   createRootContainer() {
-    const containerIndex = `tableContainer${this.tableId}`;
-    document.getElementById(this.placeForButton).innerHTML = `<div id="${containerIndex}"></div>`;
-    this.rootRef = document.getElementById(containerIndex);
+    document.getElementById(this.placeForButton).innerHTML = `<div id="tableContainer${this.tableId}"></div>`;
+    this.rootRef = document.getElementById(this.placeForButton).firstChild;
   }
 
   addButtonShowTable() {
-    const buttonIndex = 'showTable';
-    this.rootRef.innerHTML = `<button class="btn btn-green" id="${buttonIndex}">${this.tableTitle}</button>`;
-    this.buttonShowTableRef = this.rootRef.getElementById(buttonIndex);
+    this.rootRef.innerHTML = `<button class="btn btn-green" id="showTable">${this.tableTitle}</button>`;
+    this.buttonShowTableRef = this.rootRef.querySelector('#showTable');
   }
 
   drawTable() {
