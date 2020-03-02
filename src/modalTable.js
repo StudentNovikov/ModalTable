@@ -1,4 +1,6 @@
 /* eslint-disable import/prefer-default-export */
+import { ModalManager } from './modalManager.js';
+
 class ModalTable {
   constructor(tableTitle, products, placeForButton) {
     this.tableTitle = tableTitle;
