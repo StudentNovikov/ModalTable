@@ -37,6 +37,7 @@ class ModalTable {
     this.createTableContainer();
     this.drawTitle();
     this.drawFilter();
+    this.createTable();
     this.drawHead();
     this.drawBody();
     this.drawButtons();
@@ -44,17 +45,22 @@ class ModalTable {
 
   createTableContainer() {
     this.rootRef.innerHTML += '<div class="table-container"></div>';
-    this.tableRef = this.rootRef.querySelector('.table-container');
+    this.tableContainerRef = this.rootRef.querySelector('.table-container');
   }
 
   drawTitle() {
-    this.tableRef.innerHTML = `<h3 class="table-title">${this.tableTitle}</h3>`;
+    this.tableContainerRef.innerHTML = `<h3 class="table-title">${this.tableTitle}</h3>`;
   }
 
   drawFilter() {
-    this.tableRef.innerHTML += `<div class="filter-container">
+    this.tableContainerRef.innerHTML += `<div class="filter-container">
     <input type="text" placeholder="Type your filter here...">
   </div>`;
+  }
+
+  createTable() {
+    this.tableContainerRef.innerHTML += '<table class="table"></table>';
+    this.tableRef = this.tableContainerRef.querySelector('table');
   }
 
   drawHead() {
