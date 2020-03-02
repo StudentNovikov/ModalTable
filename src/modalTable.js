@@ -28,6 +28,7 @@ class ModalTable {
     this.addButtonShowTable();
     this.drawTable();
     this.drawUpdateAddForm();
+    this.drawConfirm();
     this.subscribeToEvents();
   }
 
@@ -80,7 +81,6 @@ class ModalTable {
     <th id="isAvaliable">IsAvaliable</th>
     <th id="dateAdded">Date added</th>
     <th id="actions">Actions</th>`;
-    console.log(this.tableRef.querySelector(`#${this.sort.field}`));
     this.tableRef.querySelector(`#${this.sort.field}`).innerHTML += `<span class="sort-triangle"> ${sortDirection[this.sort.direction]}</span>`;
   }
 
@@ -130,7 +130,30 @@ class ModalTable {
 
 
   drawUpdateAddForm() {
-    console.log('drawingUpdateAddForm');
+    this.rootRef.innerHTML += `<div class="add-update">
+    <form>
+    <p><label for="name">Name:</label></p>
+    <input type="text" name="inputName" id="name">
+    <p><label for="serialNumber">Serial Number:</label></p>
+    <input type="text" name="inputSerialNumber" id="serialNumber">
+    <p><label for="count">Count:</label></p>
+    <input type="number" name="inputSerialNumber" id="count">
+    <p><label for="price">Price:</label></p>
+    <input type="text" name="inputPrice" id="price">
+    <br>
+    <label for="isAvaliable" class="my-1 inline-block va-sub">Is Avaliable:</label>
+    <input type="checkbox" name="inputIsAvaliable" value="isAvaliable">
+    <p><label for="date">Date:</label></p>
+    <input type="datetime-local" name="inputDate" id="date">
+    <br>
+    <input class="btn btn-green mt-1" type="submit" value="Add / Update" id="addUpdate">
+   </form></div>`;
+    this.updateAddFormRef = this.rootRef.querySelector('.add-update');
+
+  }
+
+  drawConfirm(){
+    console.log('drawing confirm draw');
   }
 
   subscribeToEvents() {
