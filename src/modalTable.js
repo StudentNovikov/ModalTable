@@ -81,15 +81,51 @@ class ModalTable {
     <th id="dateAdded">Date added</th>
     <th id="actions">Actions</th>`;
     console.log(this.tableRef.querySelector(`#${this.sort.field}`));
-    this.tableRef.querySelector(`#${this.sort.field}`).innerHTML += ` ${sortDirection[this.sort.direction]}`;
+    this.tableRef.querySelector(`#${this.sort.field}`).innerHTML += `<span class="sort-triangle"> ${sortDirection[this.sort.direction]}</span>`;
   }
 
   drawBody() {
-    console.log('drawBody');
+    this.tableRef.querySelector('tbody').innerHTML = `<tr>
+   <th>Shoes</th>
+   <td>7064903200</td>
+   <td>4</td>
+   <td>$ 5.00</td>
+   <td>+</td>
+   <td>11.10.2020 12:24</td>
+   <td><a href="#">Edit</a> / <a href="#">Delete</a></td>
+ </tr>
+ <tr>
+   <th>Apples</th>
+   <td>7062343200</td>
+   <td>8</td>
+   <td>$ 15.00</td>
+   <td>+</td>
+   <td>09.12.2020 11:30</td>
+   <td><a href="#">Edit</a> / <a href="#">Delete</a></td>
+ </tr>
+ <tr>
+   <th>Bananas</th>
+   <td>9064933200</td>
+   <td>0</td>
+   <td>$ 5.00</td>
+   <td>-</td>
+   <td>01.07.2019 14:54</td>
+   <td><a href="#">Edit</a> / <a href="#">Delete</a></td>
+ </tr>
+ <tr>
+   <th>T-shirts</th>
+   <td>7062563202</td>
+   <td>4</td>
+   <td>$ 5.00</td>
+   <td>+</td>
+   <td>12.10.2020 12:24</td>
+   <td><a href="#">Edit</a> / <a href="#">Delete</a></td>
+ </tr>`;
   }
 
   drawButtons() {
-    console.log('drawButtons');
+    this.tableContainerRef.innerHTML += ` <button class="btn btn-green" id="addRow">Add Row</button>
+   <button class="btn btn-red btn-right move-right" id="closeTable">Close</button>`;
   }
 
 
