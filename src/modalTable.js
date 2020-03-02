@@ -1,5 +1,8 @@
 /* eslint-disable import/prefer-default-export */
 import { ModalManager } from './modalManager.js';
+import { DataManager } from './dataManager.js';
+
+const modalManager = new ModalManager();
 
 class ModalTable {
   constructor(tableTitle, products, placeForButton) {
@@ -12,6 +15,7 @@ class ModalTable {
   init() {
     this.tableId = ModalTable.id + 1;
     ModalTable.id += 1;
+    this.dataManager = new DataManager(this.products);
     this.createRootContainer();
     this.addButtonShowTable();
     this.drawTable();
@@ -31,7 +35,6 @@ class ModalTable {
 
   drawTable() {
     this.createTableContainer();
-    this.hideTableContainer();
     this.drawTitle();
     this.drawFilter();
     this.drawHead();
@@ -44,16 +47,9 @@ class ModalTable {
     this.tableRef = this.rootRef.querySelector('.table-container');
   }
 
-  hideTableContainer() {
-    this.tableRef.hidden = true;
-  }
-
-  showTableContainer() {
-    this.tableRef.hidden = false;
-  }
-
   drawTitle() {
-    console.log('drawingTitle');
+    const tableTitle = `<h3 class="table-title">${this.tableTitle}</h3>`;
+    this.tableRef.innerHTML = tableTitle;
   }
 
   drawFilter() {
