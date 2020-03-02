@@ -48,12 +48,13 @@ class ModalTable {
   }
 
   drawTitle() {
-    const tableTitle = `<h3 class="table-title">${this.tableTitle}</h3>`;
-    this.tableRef.innerHTML = tableTitle;
+    this.tableRef.innerHTML = `<h3 class="table-title">${this.tableTitle}</h3>`;
   }
 
   drawFilter() {
-    console.log('drawFilter');
+    this.tableRef.innerHTML += `<div class="filter-container">
+    <input type="text" placeholder="Type your filter here...">
+  </div>`;
   }
 
   drawHead() {
