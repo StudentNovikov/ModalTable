@@ -3,12 +3,20 @@ import { ModalManager } from './modalManager.js';
 import { DataManager } from './dataManager.js';
 
 const modalManager = new ModalManager();
+const sortDirection = {
+  ascending: '△',
+  descending: '▽',
+};
 
 class ModalTable {
   constructor(tableTitle, products, placeForButton) {
     this.tableTitle = tableTitle;
     this.products = products;
     this.placeForButton = placeForButton;
+    this.sort = {
+      field: 'name',
+      direction: 'descending',
+    };
     this.init();
   }
 
@@ -59,12 +67,21 @@ class ModalTable {
   }
 
   createTable() {
-    this.tableContainerRef.innerHTML += '<table class="table"></table>';
+    this.tableContainerRef.innerHTML += '<table class="table"><thead><tr></tr></thead><tbody></tbody></table>';
     this.tableRef = this.tableContainerRef.querySelector('table');
   }
 
   drawHead() {
-    console.log('drawHead');
+    this.tableRef.querySelector('tr').innerHTML = `
+    <th id="name">Name</th>
+    <th id="serialNumber">Serial Number</th>
+    <th id="count">Count</th>
+    <th id="price">Price</th>
+    <th id="isAvaliable">IsAvaliable</th>
+    <th id="dateAdded">Date added</th>
+    <th id="actions">Actions</th>`;
+    console.log(this.tableRef.querySelector(`#${this.sort.field}`));
+    this.tableRef.querySelector(`#${this.sort.field}`).innerHTML += ` ${sortDirection[this.sort.direction]}`;
   }
 
   drawBody() {
