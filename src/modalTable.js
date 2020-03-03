@@ -34,7 +34,7 @@ class ModalTable {
 
   createRootContainer() {
     document.getElementById(this.placeForButton).innerHTML = `<div id="tableContainer${this.tableId}"></div>`;
-    this.rootRef = document.getElementById(this.placeForButton).firstChild;
+    this.rootRef = document.getElementById('placeForTable1');
   }
 
   addButtonShowTable() {
@@ -149,15 +149,26 @@ class ModalTable {
     <input class="btn btn-green mt-1" type="submit" value="Add / Update" id="addUpdate">
    </form></div>`;
     this.updateAddFormRef = this.rootRef.querySelector('.add-update');
-
   }
 
-  drawConfirm(){
-    console.log('drawing confirm draw');
+  drawConfirm() {
+    // console.log('drawing confirm draw');
   }
 
   subscribeToEvents() {
+    this.subscribeTableOpener();
+    this.subscribeDelete();
     console.log('subscribedToEvents');
+  }
+
+  subscribeTableOpener() {
+    this.rootRef.querySelector('#showTable').addEventListener('click', () => {
+      modalManager.show({ type: 'Table', render: this.drawTable });
+    });
+  }
+
+  subscribeDelete() {
+    // console.log('deleting...');
   }
 }
 

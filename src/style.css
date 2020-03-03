@@ -162,3 +162,53 @@ input[type=text]:focus, input[type=number]:focus, input[type=datetime-local]:foc
   border:1px solid var(--light-blue-color);
   box-shadow: inset 0px 0px 5px rgba(0,0,0,0.1);
 }
+
+/* Modal window styles */
+
+/* The Modal (background) */
+.modal {
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 5rem; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  min-height: 600px;
+  margin: auto;
+  padding: 1rem;
+  border: 1px solid var(--light-blue-color);
+  width: 80%;
+  box-shadow: inset 0px 0px 15px rgba(0,0,0,0.5);
+}
+
+.modal .updateAdd{
+  width: minmax(500px, 50%);
+}
+
+.modal .confirm{
+  width: minmax(300px, 30%);
+  min-height: 300px;
+}
+/* The Close Button */
+.close {
+  color: var(--red-color);
+  float: right;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: var(--red-dark-color);
+  text-decoration: none;
+  cursor: pointer;
+}
+
