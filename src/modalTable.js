@@ -69,7 +69,15 @@ class ModalTable {
   drawFilter() {
     this.tableContainerRef.innerHTML += `<div class="filter-container">
     <input type="text" placeholder="Type your filter here...">
-  </div>`;
+    ${this.dataManager
+    .getFilters()
+    .reduce((filterHtml, filter) => {
+      return filterHtml + `<div class="added-filter">
+      <span class="filter">${filter}</span>
+      <span class="close">&times;</span>
+    </div>`
+    },'')}
+    </div>`;
   }
 
   createTable() {
@@ -139,6 +147,8 @@ class ModalTable {
 
   subscribeTableEvents = () => {
     this.subscribeTitleSortInvoke();
+    this.subscribeFilterInput();
+    this.subscribeFilterRemove();
   }
 
   subscribeTableOpener() {
@@ -155,6 +165,26 @@ class ModalTable {
         } else {
           this.dataManager.setSortField(e.target.id);
         }
+        this.drawTable();
+      }
+    });
+  }
+
+  subscribeFilterInput = () => {
+    this.rootRef.querySelector('.filter-container input').addEventListener('keydown', (e) => {
+      //checking if pressed button is 'enter'
+      if (e.which == 13 && e.target.value.trim()) {
+        this.dataManager.addFilter(e.target.value);
+        this.drawTable();
+        e.preventDefault();
+      }
+    })
+  }
+
+  subscribeFilterRemove = () => {
+    this.rootRef.querySelector('.filter-container').addEventListener('click', (e) => {
+      if (e.target.classList.contains('close')){
+        this.dataManager.removeFilter(e.target.parentNode.firstElementChild.innerHTML);
         this.drawTable();
       }
     });

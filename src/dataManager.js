@@ -14,11 +14,17 @@ class DataManager {
   }
 
   addFilter(filter) {
-    this.filterArray.push(filter);
+    if (!this.filterArray.includes(filter)) {
+      this.filterArray.push(filter.toString().toLowerCase());
+    }
   }
 
   removeFilter(filter) {
     this.filterArray.splice(this.filterArray.indexOf(filter), 1);
+  }
+
+  getFilters() {
+    return this.filterArray;
   }
 
   setSortField(sortField) {
@@ -61,20 +67,19 @@ class DataManager {
   }
 
   filter() {
-    // let resultArray = data;
-    // this.filterArray.forEach((filter) => {
-    //   resultArray = resultArray.filter((record) => {
-    //     let recordSuitsFilter = false;
-    //     record.forEach((field) => {
-    //       if (field.includes(filter)) {
-    //         recordSuitsFilter = true;
-    //       }
-    //     });
-    //     return recordSuitsFilter;
-    //   });
-    // });
-    // return resultArray;
-    return this.data;
+    let resultArray = this.data;
+    this.filterArray.forEach((filter) => {
+      resultArray = resultArray.filter((record) => {
+        let recordSuitsFilter = false;
+        Object.keys(record).forEach((field) => {
+          if (record[field].toString().toLowerCase().includes(filter)) {
+            recordSuitsFilter = true;
+          }
+        });
+        return recordSuitsFilter;
+      });
+    });
+    return resultArray;
   }
 
   sort(data) {

@@ -48,13 +48,13 @@ class ModalManager {
   }
 
   subscribeToEvents() {
-    this.closeButtonClick();
+    // this.closeButtonClick();
     this.clickNotInModal();
   }
 
-  closeButtonClick() {
-    document.getElementById('modal').querySelector('.close').addEventListener('click', this.closeModal);
-  }
+  // closeButtonClick() {
+  //   document.getElementById('modal').querySelector('.close').addEventListener('click', this.closeModal);
+  // }
 
   clickNotInModal() {
     this.modalRef.addEventListener('click', (e) => {
