@@ -16,22 +16,20 @@ const currencySigns = {
 class ModalTable {
   constructor(tableTitle, products, placeForButton) {
     this.tableTitle = tableTitle;
-    this.products = products;
     this.language = 'US';
-    this.currencySign = currencySigns.US;
+    this.currencySign = currencySigns[this.language];
     this.placeForButton = document.getElementById(placeForButton);
     this.sort = {
       field: 'name',
       direction: 'descending',
     };
-    this.init();
+    this.init(products);
   }
 
-  init() {
+  init(products) {
     this.tableId = ModalTable.id + 1;
     ModalTable.id += 1;
-    this.dataManager = new DataManager(this.products);
-
+    this.dataManager = new DataManager(products);
     this.addButtonShowTable();
     // this.drawTable();
     // this.drawUpdateAddForm();
@@ -95,7 +93,7 @@ class ModalTable {
   }
 
   drawBody() {
-    this.tableRef.querySelector('tbody').innerHTML = this.products
+    this.tableRef.querySelector('tbody').innerHTML = this.dataManager.getData()
     .reduce((tableHtml,product) => {
       return tableHtml + `
       <tr>
