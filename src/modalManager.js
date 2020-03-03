@@ -40,7 +40,6 @@ class ModalManager {
     this.subscribeToEvents();
     render();
     this.queue.push(type);
-    console.log(this.queue);
   }
 
   createModalContainer() {

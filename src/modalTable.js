@@ -12,7 +12,7 @@ class ModalTable {
   constructor(tableTitle, products, placeForButton) {
     this.tableTitle = tableTitle;
     this.products = products;
-    this.placeForButton = placeForButton;
+    this.placeForButton = document.getElementById(placeForButton);
     this.sort = {
       field: 'name',
       direction: 'descending',
@@ -24,25 +24,26 @@ class ModalTable {
     this.tableId = ModalTable.id + 1;
     ModalTable.id += 1;
     this.dataManager = new DataManager(this.products);
-    this.createRootContainer();
+
     this.addButtonShowTable();
-    this.drawTable();
-    this.drawUpdateAddForm();
-    this.drawConfirm();
+    // this.drawTable();
+    // this.drawUpdateAddForm();
+    // this.drawConfirm();
     this.subscribeToEvents();
   }
 
-  createRootContainer() {
-    document.getElementById(this.placeForButton).innerHTML = `<div id="tableContainer${this.tableId}"></div>`;
-    this.rootRef = document.getElementById('placeForTable1');
+  createRootContainer = () => {
+    this.rootRef = document.querySelector('.modal-content');
+    this.rootRef.innerHTML = `<div id="tableContainer${this.tableId}"></div>`;
+
   }
 
   addButtonShowTable() {
-    this.rootRef.innerHTML = `<button class="btn btn-green" id="showTable">${this.tableTitle}</button>`;
-    this.buttonShowTableRef = this.rootRef.querySelector('#showTable');
+    this.placeForButton.innerHTML = `<button class="btn btn-green" id="showTable">${this.tableTitle}</button>`;
   }
 
-  drawTable() {
+  drawTable = () => {
+    this.createRootContainer();
     this.createTableContainer();
     this.drawTitle();
     this.drawFilter();
@@ -157,12 +158,11 @@ class ModalTable {
 
   subscribeToEvents() {
     this.subscribeTableOpener();
-    this.subscribeDelete();
-    console.log('subscribedToEvents');
+    // this.subscribeDelete();
   }
 
   subscribeTableOpener() {
-    this.rootRef.querySelector('#showTable').addEventListener('click', () => {
+    this.placeForButton.querySelector('#showTable').addEventListener('click', () => {
       modalManager.show({ type: 'Table', render: this.drawTable });
     });
   }
