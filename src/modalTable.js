@@ -8,10 +8,16 @@ const sortDirection = {
   descending: '▽',
 };
 
+const currencySigns = {
+  US: '$',
+  RUS: '₽'
+}
+
 class ModalTable {
   constructor(tableTitle, products, placeForButton) {
     this.tableTitle = tableTitle;
     this.products = products;
+    this.currencySign = currencySigns.US;
     this.placeForButton = document.getElementById(placeForButton);
     this.sort = {
       field: 'name',
@@ -35,7 +41,6 @@ class ModalTable {
   createRootContainer = () => {
     this.rootRef = document.querySelector('.modal-content');
     this.rootRef.innerHTML = `<div id="tableContainer${this.tableId}"></div>`;
-
   }
 
   addButtonShowTable() {
@@ -86,42 +91,19 @@ class ModalTable {
   }
 
   drawBody() {
-    this.tableRef.querySelector('tbody').innerHTML = `<tr>
-   <th>Shoes</th>
-   <td>7064903200</td>
-   <td>4</td>
-   <td>$ 5.00</td>
-   <td>+</td>
-   <td>11.10.2020 12:24</td>
-   <td><a href="#">Edit</a> / <a href="#">Delete</a></td>
- </tr>
- <tr>
-   <th>Apples</th>
-   <td>7062343200</td>
-   <td>8</td>
-   <td>$ 15.00</td>
-   <td>+</td>
-   <td>09.12.2020 11:30</td>
-   <td><a href="#">Edit</a> / <a href="#">Delete</a></td>
- </tr>
- <tr>
-   <th>Bananas</th>
-   <td>9064933200</td>
-   <td>0</td>
-   <td>$ 5.00</td>
-   <td>-</td>
-   <td>01.07.2019 14:54</td>
-   <td><a href="#">Edit</a> / <a href="#">Delete</a></td>
- </tr>
- <tr>
-   <th>T-shirts</th>
-   <td>7062563202</td>
-   <td>4</td>
-   <td>$ 5.00</td>
-   <td>+</td>
-   <td>12.10.2020 12:24</td>
-   <td><a href="#">Edit</a> / <a href="#">Delete</a></td>
- </tr>`;
+    this.tableRef.querySelector('tbody').innerHTML = this.products
+    .reduce((tableHtml,product) => {
+      return tableHtml + `
+      <tr>
+      <th>${product.name}</th>
+      <td>${product.serialNumber}</td>
+      <td>${product.count}</td>
+      <td>${this.currencySign} ${product.price.toFixed(2)}</td>
+      <td>${product.isAvaliable ? '+' : '-'}</td>
+      <td>${product.dateAdded}</td>
+      <td><a href="#">Edit</a> / <a href="#">Delete</a></td>
+    </tr>`
+    },'');
   }
 
   drawButtons() {
@@ -169,6 +151,19 @@ class ModalTable {
 
   subscribeDelete() {
     // console.log('deleting...');
+  }
+
+  changeLocalisation(language){
+    this.changeCurrencySign(language);
+    this.changeDateFormat(language);
+  }
+
+  changeCurrencySign(language){
+    this.currencySign = currencySigns(language);
+  }
+
+  changeDateFormat(language){
+    console.log('dates reformated');
   }
 }
 
