@@ -10,7 +10,7 @@ class DataManager {
   }
 
   getData() {
-    return this.data;
+    return this.sort(this.filter());
   }
 
   addFilter(filter) {
@@ -61,24 +61,36 @@ class DataManager {
   }
 
   filter() {
-    let resultArray = this.data;
-    this.filterArray.forEach((filter) => {
-      resultArray = resultArray.filter((record) => {
-        let recordSuitsFilter = false;
-        record.forEach((field) => {
-          if (field.includes(filter)) {
-            recordSuitsFilter = true;
-          }
-        });
-        return recordSuitsFilter;
-      });
-    });
-    return resultArray;
+    // let resultArray = data;
+    // this.filterArray.forEach((filter) => {
+    //   resultArray = resultArray.filter((record) => {
+    //     let recordSuitsFilter = false;
+    //     record.forEach((field) => {
+    //       if (field.includes(filter)) {
+    //         recordSuitsFilter = true;
+    //       }
+    //     });
+    //     return recordSuitsFilter;
+    //   });
+    // });
+    // return resultArray;
+    return this.data;
   }
 
-  sort(field) {
-    console.log(`sorting by ${field}`);
-    return this.data.sort((a, b) => a[this.sortBy.field] - b[this.sortBy.field]);
+  sort(data) {
+    if (this.sortBy.field === 'name') {
+      return this.sortBy.direction === 'ascending'
+        ? data.sort((a, b) => (`${b.name}`).localeCompare(a.name))
+        : data.sort((a, b) => (`${a.name}`).localeCompare(b.name));
+    }
+    if (this.sortBy.field === 'dateAdded') {
+      return this.sortBy.direction === 'ascending'
+        ? data.sort((a, b) => new Date(a.dateAdded) - new Date(b.dateAdded))
+        : data.sort((a, b) => new Date(b.dateAdded) - new Date(a.dateAdded));
+    }
+    return this.sortBy.direction === 'ascending'
+      ? data.sort((a, b) => a[this.sortBy.field] - b[this.sortBy.field])
+      : data.sort((a, b) => b[this.sortBy.field] - a[this.sortBy.field]);
   }
 }
 

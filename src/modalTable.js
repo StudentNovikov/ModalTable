@@ -139,7 +139,6 @@ class ModalTable {
 
   subscribeTableEvents = () => {
     this.subscribeTitleSortInvoke();
-    console.log('we subscribed i swear!');
   }
 
   subscribeTableOpener() {
@@ -152,10 +151,11 @@ class ModalTable {
     this.rootRef.querySelector('thead').addEventListener('click', (e) => {
       if (e.target.id !== 'actions') {
         if (e.target.classList.contains('sort-triangle')) {
-          this.dataManager.sort(e.target.parentElement.id);
+          this.dataManager.setSortField(e.target.parentElement.id);
         } else {
-          this.dataManager.sort(e.target.id);
+          this.dataManager.setSortField(e.target.id);
         }
+        this.drawTable();
       }
     });
   }
