@@ -3,7 +3,10 @@ class DataManager {
   constructor(data) {
     this.data = data;
     this.filterArray = [];
-    this.sortBy = 'name';
+    this.sortBy = {
+      field: 'name',
+      direction: 'descending',
+    };
   }
 
   getData() {
@@ -19,7 +22,22 @@ class DataManager {
   }
 
   setSortField(sortField) {
-    this.sortBy = sortField;
+    this.sortBy.field = sortField;
+    this.sortBy.direction = this.changeSortDirection();
+  }
+
+  getSortField() {
+    return this.sortBy.field;
+  }
+
+  getSortDirection() {
+    return this.sortBy.direction;
+  }
+
+  changeSortDirection() {
+    return this.sortBy.direction === 'descending'
+      ? 'ascending'
+      : 'descending';
   }
 
   add(row) {
@@ -60,7 +78,7 @@ class DataManager {
 
 
   sort(array) {
-    return array.sort((a, b) => a[this.sortBy] - b[this.sortBy]);
+    return array.sort((a, b) => a[this.sortBy.field] - b[this.sortBy.field]);
   }
 }
 

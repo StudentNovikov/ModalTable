@@ -19,10 +19,6 @@ class ModalTable {
     this.language = 'US';
     this.currencySign = currencySigns[this.language];
     this.placeForButton = document.getElementById(placeForButton);
-    this.sort = {
-      field: 'name',
-      direction: 'descending',
-    };
     this.init(products);
   }
 
@@ -89,7 +85,9 @@ class ModalTable {
     <th id="isAvaliable">IsAvaliable</th>
     <th id="dateAdded">Date added</th>
     <th id="actions">Actions</th>`;
-    this.tableRef.querySelector(`#${this.sort.field}`).innerHTML += `<span class="sort-triangle"> ${sortDirection[this.sort.direction]}</span>`;
+    this.tableRef
+    .querySelector(`#${this.dataManager.getSortField()}`)
+    .innerHTML += `<span class="sort-triangle"> ${sortDirection[this.dataManager.getSortDirection()]}</span>`;
   }
 
   drawBody() {
