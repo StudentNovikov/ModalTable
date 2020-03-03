@@ -17,6 +17,7 @@ class ModalTable {
   constructor(tableTitle, products, placeForButton) {
     this.tableTitle = tableTitle;
     this.products = products;
+    this.language = 'US';
     this.currencySign = currencySigns.US;
     this.placeForButton = document.getElementById(placeForButton);
     this.sort = {
@@ -64,7 +65,10 @@ class ModalTable {
   }
 
   drawTitle() {
-    this.tableContainerRef.innerHTML = `<h3 class="table-title">${this.tableTitle}</h3>`;
+    this.tableContainerRef.innerHTML = ` <div>
+    <h3 class="table-title">${this.tableTitle}</h3>
+    <span class="move-right language">${this.language}</span>
+    </div>`;
   }
 
   drawFilter() {

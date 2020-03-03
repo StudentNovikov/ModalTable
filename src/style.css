@@ -34,7 +34,10 @@
 
 .table-title{
   margin-bottom:2rem;
+  display: inline-block;
 }
+
+
 
 .table td, .table th{
   border-top: 1px solid var(--dark-gray-color);
@@ -161,6 +164,21 @@ input[type=text]:focus, input[type=number]:focus, input[type=datetime-local]:foc
   margin:0 auto;
   border:1px solid var(--light-blue-color);
   box-shadow: inset 0px 0px 5px rgba(0,0,0,0.1);
+}
+
+/* Language styles */
+
+.language{
+  padding:0.5rem 1rem;
+  background-color: var(--dark-gray-color);
+  margin-right: 3rem;
+  margin-top:3.8rem;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  cursor: pointer;
+}
+
+.language:hover{
+  background-color: var(--green-light-color);
 }
 
 /* Modal window styles */
