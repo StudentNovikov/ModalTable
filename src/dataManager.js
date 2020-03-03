@@ -76,9 +76,9 @@ class DataManager {
     return resultArray;
   }
 
-
-  sort(array) {
-    return array.sort((a, b) => a[this.sortBy.field] - b[this.sortBy.field]);
+  sort(field) {
+    console.log(`sorting by ${field}`);
+    return this.data.sort((a, b) => a[this.sortBy.field] - b[this.sortBy.field]);
   }
 }
 

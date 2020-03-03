@@ -53,9 +53,18 @@
   background-color: var(--light-blue-color)
 }
 
+.table thead{
+  cursor: pointer;
+}
+
 .table thead th {
   padding: 1.2rem 0;
   background-color: var(--gray-color);
+  transition: background-color .25s ease-in-out;
+}
+
+.table thead th:hover{
+  background-color: var(--light-blue-color);
 }
 
 /* Filter styles */

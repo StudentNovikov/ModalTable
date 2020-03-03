@@ -10,8 +10,8 @@ const sortDirection = {
 
 const currencySigns = {
   US: '$',
-  RUS: '₽'
-}
+  RUS: '₽',
+};
 
 class ModalTable {
   constructor(tableTitle, products, placeForButton) {
@@ -30,7 +30,7 @@ class ModalTable {
     // this.drawTable();
     // this.drawUpdateAddForm();
     // this.drawConfirm();
-    this.subscribeToEvents();
+    this.subscribeTableOpener();
   }
 
   createRootContainer = () => {
@@ -51,6 +51,7 @@ class ModalTable {
     this.drawHead();
     this.drawBody();
     this.drawButtons();
+    this.subscribeTableEvents();
   }
 
   createTableContainer() {
@@ -86,14 +87,13 @@ class ModalTable {
     <th id="dateAdded">Date added</th>
     <th id="actions">Actions</th>`;
     this.tableRef
-    .querySelector(`#${this.dataManager.getSortField()}`)
-    .innerHTML += `<span class="sort-triangle"> ${sortDirection[this.dataManager.getSortDirection()]}</span>`;
+      .querySelector(`#${this.dataManager.getSortField()}`)
+      .innerHTML += `<span class="sort-triangle"> ${sortDirection[this.dataManager.getSortDirection()]}</span>`;
   }
 
   drawBody() {
     this.tableRef.querySelector('tbody').innerHTML = this.dataManager.getData()
-    .reduce((tableHtml,product) => {
-      return tableHtml + `
+      .reduce((tableHtml, product) => `${tableHtml}
       <tr>
       <th>${product.name}</th>
       <td>${product.serialNumber}</td>
@@ -102,8 +102,7 @@ class ModalTable {
       <td>${product.isAvaliable ? '+' : '-'}</td>
       <td>${product.dateAdded}</td>
       <td><a href="#">Edit</a> / <a href="#">Delete</a></td>
-    </tr>`
-    },'');
+    </tr>`, '');
   }
 
   drawButtons() {
@@ -138,9 +137,9 @@ class ModalTable {
     // console.log('drawing confirm draw');
   }
 
-  subscribeToEvents() {
-    this.subscribeTableOpener();
-    // this.subscribeDelete();
+  subscribeTableEvents = () => {
+    this.subscribeTitleSortInvoke();
+    console.log('we subscribed i swear!');
   }
 
   subscribeTableOpener() {
@@ -149,20 +148,32 @@ class ModalTable {
     });
   }
 
+  subscribeTitleSortInvoke = () => {
+    this.rootRef.querySelector('thead').addEventListener('click', (e) => {
+      if (e.target.id !== 'actions') {
+        if (e.target.classList.contains('sort-triangle')) {
+          this.dataManager.sort(e.target.parentElement.id);
+        } else {
+          this.dataManager.sort(e.target.id);
+        }
+      }
+    });
+  }
+
   subscribeDelete() {
     // console.log('deleting...');
   }
 
-  changeLocalisation(language){
+  changeLocalisation(language) {
     this.changeCurrencySign(language);
     this.changeDateFormat(language);
   }
 
-  changeCurrencySign(language){
+  changeCurrencySign(language) {
     this.currencySign = currencySigns(language);
   }
 
-  changeDateFormat(language){
+  changeDateFormat(language) {
     console.log('dates reformated');
   }
 }
