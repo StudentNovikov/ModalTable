@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Document</title>
+</head>
+<body>
+   <div class="table-container">
+    <h3 class="table-title">Table #1</h3>
+    <div class="filter-container">
+      <input type="text" placeholder="Type your filter here...">
+    </div>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th id="name">Name</th>
+          <th id="serialNumber">Serial Number</th>
+          <th id="count"></th>Count</th>
+          <th id="price">Price</th>
+          <th id="isAvaliable">IsAvaliable</th>
+          <th id="dateAdded">Date added</th>
+          <th id="actions">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>Shoes</th>
+          <td>7064903200</td>
+          <td>4</td>
+          <td>$ 5.00</td>
+          <td>+</td>
+          <td>11.10.2020 12:24</td>
+          <td><a href="#">Edit</a> / <a href="#">Delete</a></td>
+        </tr>
+        <tr>
+          <th>Apples</th>
+          <td>7062343200</td>
+          <td>8</td>
+          <td>$ 15.00</td>
+          <td>+</td>
+          <td>09.12.2020 11:30</td>
+          <td><a href="#">Edit</a> / <a href="#">Delete</a></td>
+        </tr>
+        <tr>
+          <th>Bananas</th>
+          <td>9064933200</td>
+          <td>0</td>
+          <td>$ 5.00</td>
+          <td>-</td>
+          <td>01.07.2019 14:54</td>
+          <td><a href="#">Edit</a> / <a href="#">Delete</a></td>
+        </tr>
+        <tr>
+          <th>T-shirts</th>
+          <td>7062563202</td>
+          <td>4</td>
+          <td>$ 5.00</td>
+          <td>+</td>
+          <td>12.10.2020 12:24</td>
+          <td><a href="#">Edit</a> / <a href="#">Delete</a></td>
+        </tr>
+        <tr>
+          <th>Coca-Cola</th>
+          <td>2062343204</td>
+          <td>8</td>
+          <td>$ 15.00</td>
+          <td>+</td>
+          <td>09.12.2020 11:30</td>
+          <td><a href="#">Edit</a> / <a href="#">Delete</a></td>
+        </tr>
+        <tr>
+          <th>Water</th>
+          <td>4064933205</td>
+          <td>10</td>
+          <td>$ 5.00</td>
+          <td>-</td>
+          <td>01.07.2019 14:54</td>
+          <td><a href="#">Edit</a> / <a href="#">Delete</a></td>
+        </tr>
+        <tr>
+          <th>Sand</th>
+          <td>1064933242</td>
+          <td>120</td>
+          <td>$ 22.00</td>
+          <td>-</td>
+          <td>03.07.2019 14:54</td>
+          <td><a href="#">Edit</a> / <a href="#">Delete</a></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <button class="btn btn-green" id="addRow">Add Row</button>
+    <button class="btn btn-red btn-right move-right" id="closeTable">Close</button>
+  </div>
+  <hr>
+  <div class="separator"></div>
+  <div class="add-update">
+    <form>
+      <p><label for="name">Name:</label></p>
+      <input type="text" name="inputName" id="name">
+      <p><label for="serialNumber">Serial Number:</label></p>
+      <input type="text" name="inputSerialNumber" id="serialNumber">
+      <p><label for="count">Count:</label></p>
+      <input type="number" name="inputSerialNumber" id="count">
+      <p><label for="price">Price:</label></p>
+      <input type="text" name="inputPrice" id="price">
+      <br>
+      <label for="isAvaliable" class="my-1 inline-block va-sub">Is Avaliable:</label>
+      <input type="checkbox" name="inputIsAvaliable" value="isAvaliable">
+      <p><label for="date">Date:</label></p>
+      <input type="datetime-local" name="inputDate" id="date">
+      <br>
+      <input class="btn btn-green mt-1" type="submit" value="Add / Update" id="addUpdate">
+     </form>
+  </div>
+</body>
+</html>
