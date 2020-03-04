@@ -135,6 +135,7 @@ class Table {
     this.subscribeDeleteButton();
     this.subscribeAddButton();
     this.subscribeEditButton();
+    this.subscribeCloseButton();
   }
 
   subscribeTableOpener() {
@@ -196,6 +197,13 @@ class Table {
         this.fillInUpdateForm();
       }
     })
+  }
+
+  subscribeCloseButton = () =>{
+    document.getElementById('closeTable').addEventListener('click',() => {
+      modalManager.add({ type: 'Confirmation', onSuccess: modalManager.closeModal ,render: () => {}})
+      modalManager.show();
+    });
   }
 
   fillInUpdateForm = () => {
