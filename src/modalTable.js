@@ -106,10 +106,10 @@ class ModalTable {
       <th>${product.name}</th>
       <td>${product.serialNumber}</td>
       <td>${product.count}</td>
-      <td>${this.currencySign} ${product.price.toFixed(2)}</td>
+      <td>${this.currencySign} ${Number.parseFloat(product.price).toFixed(2)}</td>
       <td>${product.isAvaliable ? '+' : '-'}</td>
       <td>${product.dateAdded}</td>
-      <td><button class="btn btn-small btn-green">Edit</button> <button class="btn btn-small btn-red delete-button">Delete</button></td>
+      <td><button class="btn btn-small btn-green update-button">Edit</button> <button class="btn btn-small btn-red delete-button">Delete</button></td>
     </tr>`, '');
   }
 
@@ -123,13 +123,10 @@ class ModalTable {
     this.drawTable();
   }
 
-
-
   drawButtons() {
     this.tableContainerRef.innerHTML += ` <button class="btn btn-green" id="addRow">Add Row</button>
    <button class="btn btn-gray move-right" id="closeTable">Close</button>`;
   }
-
 
   drawUpdateAddForm() {
     this.rootRef.innerHTML += `<div class="add-update">
@@ -158,6 +155,8 @@ class ModalTable {
     this.subscribeFilterInput();
     this.subscribeFilterRemove();
     this.subscribeDeleteButton();
+    // this.subscribeEditButton();
+    this.subscribeAddButton();
   }
 
   subscribeTableOpener() {
@@ -208,6 +207,37 @@ class ModalTable {
       }
     })
   }
+
+  subscribeEditButton(){
+    // this.rootRef.querySelector('tbody').addEventListener('click',(e) => {
+    //   if(e.target.classList.contains('update-button')){
+    //     this.currentIndex = e.target.parentNode.parentNode.id;
+    //     this.confirmDelete();
+    //   }
+    // })
+  }
+
+  subscribeAddButton(){
+    this.rootRef.querySelector('#addRow').addEventListener('click',(e) => {
+      modalManager.add({ type: 'AddUpdate', render: () => {}, onSuccess: this.add });
+      modalManager.show();
+    })
+  }
+
+  add = () => {
+    this.dataManager.add(this.getProductFromAddUpdateForm());
+  }
+
+  getProductFromAddUpdateForm = () => {
+    const name = document.getElementById('name').value;
+    const serialNumber = document.getElementById('serialNumber').value;
+    const count = document.getElementById('count').value;
+    const price = document.getElementById('price').value;
+    const isAvaliable = document.getElementById('isAvaliable').checked;
+    const dateAdded = document.getElementById('date').value;
+    return {name, serialNumber, count, price, isAvaliable, dateAdded}
+  }
+
 
   changeLocalisation(language) {
     this.changeCurrencySign(language);

@@ -48,22 +48,15 @@ class DataManager {
 
   add(row) {
     this.data.push(row);
-    this.filterAndSort();
   }
 
-  edit(index, newValue) {
-    this.data.delete(index);
-    this.add(newValue);
-    this.filterAndSort();
-  }
+  // edit(index, newValue) {
+  //   this.data.delete(index);
+  //   this.add(newValue);
+  // }
 
   delete(index) {
     this.data.splice(index, 1);
-  }
-
-  filterAndSort() {
-    this.filter();
-    this.sort();
   }
 
   filter() {
