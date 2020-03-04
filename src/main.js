@@ -29,7 +29,7 @@ const firstTable = new ModalTable('Table from class #1', [{
   isAvaliable: false,
   dateAdded: '01.01.2022 02:04',
 }, {
-  name: 'Sprite',
+  name: 'Beer',
   serialNumber: 5364903300,
   count: 1200,
   price: 114.00,

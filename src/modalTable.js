@@ -99,23 +99,30 @@ class ModalTable {
       .innerHTML += `<span class="sort-triangle"> ${sortDirection[this.dataManager.getSortDirection()]}</span>`;
   }
 
-  drawBody() {
+  drawBody = () => {
     this.tableRef.querySelector('tbody').innerHTML = this.dataManager.getData()
-      .reduce((tableHtml, product) => `${tableHtml}
-      <tr>
+      .reduce((tableHtml, product, index) => `${tableHtml}
+      <tr id="${index}">
       <th>${product.name}</th>
       <td>${product.serialNumber}</td>
       <td>${product.count}</td>
       <td>${this.currencySign} ${product.price.toFixed(2)}</td>
       <td>${product.isAvaliable ? '+' : '-'}</td>
       <td>${product.dateAdded}</td>
-      <td><a href="#">Edit</a> / <a href="#">Delete</a></td>
+      <td><button class="btn btn-small btn-green">Edit</button> <button class="btn btn-small btn-red delete-button">Delete</button></td>
     </tr>`, '');
+  }
+
+  delete = (index) => {
+    if(confirm('Are you sure?')){
+      this.dataManager.delete(index);
+      this.drawTable();
+    }
   }
 
   drawButtons() {
     this.tableContainerRef.innerHTML += ` <button class="btn btn-green" id="addRow">Add Row</button>
-   <button class="btn btn-red btn-right move-right" id="closeTable">Close</button>`;
+   <button class="btn btn-gray move-right" id="closeTable">Close</button>`;
   }
 
 
@@ -149,6 +156,8 @@ class ModalTable {
     this.subscribeTitleSortInvoke();
     this.subscribeFilterInput();
     this.subscribeFilterRemove();
+    this.subscribeDeleteButton();
+
   }
 
   subscribeTableOpener() {
@@ -190,8 +199,13 @@ class ModalTable {
     });
   }
 
-  subscribeDelete() {
-    // console.log('deleting...');
+  subscribeDeleteButton(){
+    this.rootRef.querySelector('tbody').addEventListener('click',(e) => {
+      if(e.target.classList.contains('delete-button')){
+        this.delete(e.target.parentNode.parentNode.id);
+      }
+    })
+
   }
 
   changeLocalisation(language) {
