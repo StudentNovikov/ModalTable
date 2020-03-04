@@ -71,6 +71,37 @@ class ModalManager {
     this.clickNotInModal();
     this.clickYesConfirm();
     this.clickNoConfirm();
+
+    if(this.stack[this.stack.length - 1].type === 'AddUpdate') {
+     this.addFormValidation();
+    }
+  }
+
+  addFormValidation(){
+    document.getElementById('name').addEventListener('blur',() => {
+      if(document.getElementById('name').value.length < 3 || document.getElementById('name').value.length > 20){
+        this.disableSubmitAddUpdate();
+        this.showToolTip('name','Name - required, min 3 chars, max 20 chars');
+      }
+    })
+    document.getElementById('serialNumber').addEventListener('blur', () => {
+      if(document.getElementById('serialNumber').value.toString().length !== 10){
+        this.disableSubmitAddUpdate();
+        this.showToolTip('serialNumber','SerialNumber - required, 10digits');
+      }
+    });
+  }
+
+
+
+  disableSubmitAddUpdate(){
+    document.getElementById('confirm-yes').disabled = true;
+  }
+
+  showToolTip(index,message){
+    console.log('-------------');
+    console.log(index);
+    console.log(message);
   }
 
   closeButtonClick = () => {
