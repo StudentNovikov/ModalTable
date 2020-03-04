@@ -2,7 +2,7 @@
 
 class ModalManager {
   constructor() {
-    this.queue = [];
+    this.stack = [];
     this.modalType = {
       Table: () => {
         this.modalRef.innerHTML = `<div class="modal">
@@ -56,9 +56,9 @@ class ModalManager {
   }
 
   show = () => {
-    this.renderModalTemplate(this.queue[this.queue.length - 1].type);
+    this.renderModalTemplate(this.stack[this.stack.length - 1].type);
     this.subscribeToEvents();
-    this.queue[this.queue.length - 1].render();
+    this.stack[this.stack.length - 1].render();
   }
 
   createModalContainer() {
@@ -82,7 +82,7 @@ class ModalManager {
 
   clickNotInModal() {
     this.modalRef.addEventListener('click', (e) => {
-      if (e.target.classList == 'modal' && this.queue[this.queue.length - 1].type !== 'Confirmation') {
+      if (e.target.classList == 'modal' && this.stack[this.stack.length - 1].type !== 'Confirmation') {
         this.add({ type: 'Confirmation', onSuccess: this.closeModal ,render: () => {}})
         this.show();
       } else if(e.target.classList == 'modal'){
@@ -93,7 +93,7 @@ class ModalManager {
 
   clickYesConfirm = () => {
     document.getElementById('confirm-yes').addEventListener('click', () => {
-      this.queue[this.queue.length - 1].onSuccess();
+      this.stack[this.stack.length - 1].onSuccess();
       this.closeModal();
     });
   }
@@ -103,7 +103,7 @@ class ModalManager {
   }
 
   closeModal = () => {
-    if (this.queue.length === 1) {
+    if (this.stack.length === 1) {
       this.modalRef.innerHTML = '';
     } else {
       this.remove();
@@ -115,12 +115,12 @@ class ModalManager {
   }
 
   add(item) {
-    this.queue.push(item);
+    this.stack.push(item);
   }
 
   remove() {
-    this.queue.pop();
-    this.show(this.queue[this.queue.length - 1]);
+    this.stack.pop();
+    this.show(this.stack[this.stack.length - 1]);
   }
 
 }
