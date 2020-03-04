@@ -35,7 +35,7 @@ class ModalTable {
 
   createRootContainer = () => {
     this.rootRef = document.querySelector('.modal-content');
-    this.rootRef.innerHTML = `<div id="tableContainer${this.tableId}"></div>`;
+    this.rootRef.innerHTML = `<div></div>`;
   }
 
   addButtonShowTable() {
@@ -61,8 +61,8 @@ class ModalTable {
 
   drawTitle() {
     this.tableContainerRef.innerHTML = ` <div>
-    <h3 class="table-title">${this.tableTitle}</h3>
-    <span class="move-right language">${this.language}</span>
+      <h3 class="table-title">${this.tableTitle}</h3>
+      <span class="move-right language">${this.language}</span>
     </div>`;
   }
 
@@ -113,12 +113,17 @@ class ModalTable {
     </tr>`, '');
   }
 
-  delete = (index) => {
-    if(confirm('Are you sure?')){
-      this.dataManager.delete(index);
-      this.drawTable();
-    }
+  confirmDelete = () => {
+    modalManager.add({ type: 'Confirmation', onSuccess: this.delete ,render: () => {}})
+    modalManager.show();
   }
+
+  delete = () => {
+    this.dataManager.delete(this.currentIndex);
+    this.drawTable();
+  }
+
+
 
   drawButtons() {
     this.tableContainerRef.innerHTML += ` <button class="btn btn-green" id="addRow">Add Row</button>
@@ -148,21 +153,17 @@ class ModalTable {
     this.updateAddFormRef = this.rootRef.querySelector('.add-update');
   }
 
-  drawConfirm() {
-    // console.log('drawing confirm draw');
-  }
-
   subscribeTableEvents = () => {
     this.subscribeTitleSortInvoke();
     this.subscribeFilterInput();
     this.subscribeFilterRemove();
     this.subscribeDeleteButton();
-
   }
 
   subscribeTableOpener() {
     this.placeForButton.querySelector('#showTable').addEventListener('click', () => {
-      modalManager.show({ type: 'Table', render: this.drawTable });
+      modalManager.add({ type: 'Table', render: this.drawTable });
+      modalManager.show();
     });
   }
 
@@ -202,10 +203,10 @@ class ModalTable {
   subscribeDeleteButton(){
     this.rootRef.querySelector('tbody').addEventListener('click',(e) => {
       if(e.target.classList.contains('delete-button')){
-        this.delete(e.target.parentNode.parentNode.id);
+        this.currentIndex = e.target.parentNode.parentNode.id;
+        this.confirmDelete();
       }
     })
-
   }
 
   changeLocalisation(language) {

@@ -153,6 +153,15 @@ input[type=text]:focus, input[type=number]:focus, input[type=datetime-local]:foc
 }
 
 /* Positioning styles */
+.flex{
+  display: flex;
+  justify-content: space-around;
+}
+
+.text-center{
+  text-align: center;
+}
+
 .move-right{
   float: right;
 }
@@ -258,7 +267,8 @@ input[type=text]:focus, input[type=number]:focus, input[type=datetime-local]:foc
 }
 
 .modal .updateAdd{
-  width: minmax(500px, 50%);
+  width: 300px;
+  min-height: 150px;
 }
 
 .modal .confirm{

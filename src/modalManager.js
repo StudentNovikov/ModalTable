@@ -1,23 +1,27 @@
 /* eslint-disable import/prefer-default-export */
 
-
 class ModalManager {
   constructor() {
     this.queue = [];
     this.modalType = {
       Table: () => {
         this.modalRef.innerHTML = `<div class="modal">
-        <div class="modal-content">
-          <span class="close">&times;</span>
-          <p>Test text..</p>
-        </div>
+          <div class="modal-content">
+            <span class="close">&times;</span>
+            <button class="btn btn-green" id="confirm-no"> NO </button>
+            <button class="btn btn-red" id="confirm-yes"> YES </button>
+          </div>
         </div>`;
       },
       Confirmation: () => {
         this.modalRef.innerHTML = `<div class="modal">
       <div class="modal-content updateAdd">
-        <span class="close">&times;</span>
-        <p>Test text..</p>
+        <span class="close" hidden>&times;</span>
+        <h2 class="text-center my-1"> Are you sure? </h2>
+        <div class="flex">
+          <button class="btn btn-green" id="confirm-no" > NO </button>
+          <button class="btn btn-red" id="confirm-yes"> YES </button>
+        </div>
       </div>
       </div>`;
       },
@@ -33,13 +37,10 @@ class ModalManager {
     this.createModalContainer();
   }
 
-  show({
-    type, params, onClose, onCalcel, onSuccess, render,
-  }) {
-    this.renderModalTemplate(type);
+  show = () => {
+    this.renderModalTemplate(this.queue[this.queue.length - 1].type);
     this.subscribeToEvents();
-    render();
-    this.queue.push(type);
+    this.queue[this.queue.length - 1].render();
   }
 
   createModalContainer() {
@@ -48,13 +49,15 @@ class ModalManager {
   }
 
   subscribeToEvents() {
-    // this.closeButtonClick();
+    this.closeButtonClick();
     this.clickNotInModal();
+    this.clickYesConfirm();
+    this.clickNoConfirm();
   }
 
-  // closeButtonClick() {
-  //   document.getElementById('modal').querySelector('.close').addEventListener('click', this.closeModal);
-  // }
+  closeButtonClick() {
+    document.getElementById('modal').querySelector('.close').addEventListener('click', this.closeModal);
+  }
 
   clickNotInModal() {
     this.modalRef.addEventListener('click', (e) => {
@@ -64,9 +67,23 @@ class ModalManager {
     });
   }
 
+  clickYesConfirm = () => {
+    document.getElementById('confirm-yes').addEventListener('click', () => {
+      this.queue[this.queue.length - 1].onSuccess();
+      this.closeModal();
+    });
+  }
+
+  clickNoConfirm = () => {
+    document.getElementById('confirm-no').addEventListener('click', () => this.closeModal());
+  }
+
   closeModal = () => {
-    this.queue = [];
-    this.modalRef.innerHTML = '';
+    if (this.queue.length === 1) {
+      this.modalRef.innerHTML = '';
+    } else {
+      this.remove();
+    }
   }
 
   renderModalTemplate(type) {
@@ -79,11 +96,8 @@ class ModalManager {
 
   remove() {
     this.queue.pop();
-    this.show();
+    this.show(this.queue[this.queue.length - 1]);
   }
 
-  drawModalContainer() {
-    // TODO
-  }
 }
 export { ModalManager };
