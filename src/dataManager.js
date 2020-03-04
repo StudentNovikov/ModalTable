@@ -4,7 +4,7 @@ class DataManager {
     this.data = data;
     this.filterArray = [];
     this.sortBy = {
-      field: 'name',
+      field: 'dateAdded',
       direction: 'descending',
     };
   }
@@ -49,11 +49,6 @@ class DataManager {
   add(row) {
     this.data.push(row);
   }
-
-  // edit(index, newValue) {
-  //   this.data.delete(index);
-  //   this.add(newValue);
-  // }
 
   delete(index) {
     this.data.splice(index, 1);

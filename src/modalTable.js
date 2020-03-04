@@ -157,6 +157,7 @@ class ModalTable {
     this.subscribeDeleteButton();
     // this.subscribeEditButton();
     this.subscribeAddButton();
+    this.subscribeEditButton();
   }
 
   subscribeTableOpener() {
@@ -208,13 +209,30 @@ class ModalTable {
     })
   }
 
-  subscribeEditButton(){
-    // this.rootRef.querySelector('tbody').addEventListener('click',(e) => {
-    //   if(e.target.classList.contains('update-button')){
-    //     this.currentIndex = e.target.parentNode.parentNode.id;
-    //     this.confirmDelete();
-    //   }
-    // })
+  subscribeEditButton = () =>{
+    this.rootRef.querySelector('tbody').addEventListener('click',(e) => {
+      if(e.target.classList.contains('update-button')){
+        this.currentIndex = e.target.parentNode.parentNode.id;
+        this.currentProduct = this.dataManager.getData()[this.currentIndex];
+        modalManager.add({ type: 'AddUpdate', render: this.fillInUpdateForm, onSuccess: this.update });
+        modalManager.show();
+        this.fillInUpdateForm();
+      }
+    })
+  }
+
+  fillInUpdateForm = () => {
+   document.getElementById('name').value = this.currentProduct.name;
+   document.getElementById('serialNumber').value = this.currentProduct.serialNumber;
+   document.getElementById('count').value = this.currentProduct.count;
+   document.getElementById('price').value = this.currentProduct.price;
+   document.getElementById('isAvaliable').checked = this.currentProduct.isAvaliable;
+   document.getElementById('date').value = this.currentProduct.dateAdded.toLocaleString();
+  }
+
+  update = () => {
+    this.dataManager.delete(this.currentIndex);
+    this.add();
   }
 
   subscribeAddButton(){
