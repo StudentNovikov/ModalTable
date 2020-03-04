@@ -128,28 +128,6 @@ class Table {
    <button class="btn btn-gray move-right" id="closeTable">Close</button>`;
   }
 
-  drawUpdateAddForm() {
-    this.rootRef.innerHTML += `<div class="add-update">
-    <form>
-    <p><label for="name">Name:</label></p>
-    <input type="text" name="inputName" id="name">
-    <p><label for="serialNumber">Serial Number:</label></p>
-    <input type="text" name="inputSerialNumber" id="serialNumber">
-    <p><label for="count">Count:</label></p>
-    <input type="number" name="inputSerialNumber" id="count">
-    <p><label for="price">Price:</label></p>
-    <input type="text" name="inputPrice" id="price">
-    <br>
-    <label for="isAvaliable" class="my-1 inline-block va-sub">Is Avaliable:</label>
-    <input type="checkbox" name="inputIsAvaliable" value="isAvaliable">
-    <p><label for="date">Date:</label></p>
-    <input type="datetime-local" name="inputDate" id="date">
-    <br>
-    <input class="btn btn-green mt-1" type="submit" value="Add / Update" id="addUpdate">
-   </form></div>`;
-    this.updateAddFormRef = this.rootRef.querySelector('.add-update');
-  }
-
   subscribeTableEvents = () => {
     this.subscribeTitleSortInvoke();
     this.subscribeFilterInput();
