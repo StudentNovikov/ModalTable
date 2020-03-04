@@ -73,13 +73,19 @@ class ModalManager {
     this.clickNoConfirm();
   }
 
-  closeButtonClick() {
-    document.getElementById('modal').querySelector('.close').addEventListener('click', this.closeModal);
+  closeButtonClick = () => {
+    document.getElementById('modal').querySelector('.close').addEventListener('click', () => {
+      this.add({ type: 'Confirmation', onSuccess: this.closeModal ,render: () => {}})
+      this.show();
+    });
   }
 
   clickNotInModal() {
     this.modalRef.addEventListener('click', (e) => {
-      if (e.target.classList == 'modal') {
+      if (e.target.classList == 'modal' && this.queue[this.queue.length - 1].type !== 'Confirmation') {
+        this.add({ type: 'Confirmation', onSuccess: this.closeModal ,render: () => {}})
+        this.show();
+      } else if(e.target.classList == 'modal'){
         this.closeModal();
       }
     });
