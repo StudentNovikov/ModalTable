@@ -13,7 +13,7 @@ const currencySigns = {
   RUS: '₽',
 };
 
-class ModalTable {
+class Table {
   constructor(tableTitle, products, placeForButton) {
     this.tableTitle = tableTitle;
     this.language = 'US';
@@ -23,8 +23,8 @@ class ModalTable {
   }
 
   init(products) {
-    this.tableId = ModalTable.id + 1;
-    ModalTable.id += 1;
+    this.tableId = Table.id + 1;
+    Table.id += 1;
     this.dataManager = new DataManager(products);
     this.addButtonShowTable();
     // this.drawTable();
@@ -108,7 +108,7 @@ class ModalTable {
       <td>${product.count}</td>
       <td>${this.currencySign} ${Number.parseFloat(product.price).toFixed(2)}</td>
       <td>${product.isAvaliable ? '+' : '-'}</td>
-      <td>${product.dateAdded}</td>
+      <td>${product.dateAdded.replace('T',' ')}</td>
       <td><button class="btn btn-small btn-green update-button">Edit</button> <button class="btn btn-small btn-red delete-button">Delete</button></td>
     </tr>`, '');
   }
@@ -155,7 +155,6 @@ class ModalTable {
     this.subscribeFilterInput();
     this.subscribeFilterRemove();
     this.subscribeDeleteButton();
-    // this.subscribeEditButton();
     this.subscribeAddButton();
     this.subscribeEditButton();
   }
@@ -227,7 +226,7 @@ class ModalTable {
    document.getElementById('count').value = this.currentProduct.count;
    document.getElementById('price').value = this.currentProduct.price;
    document.getElementById('isAvaliable').checked = this.currentProduct.isAvaliable;
-   document.getElementById('date').value = this.currentProduct.dateAdded.toLocaleString();
+   document.getElementById('date').value = this.currentProduct.dateAdded;
   }
 
   update = () => {
@@ -271,6 +270,6 @@ class ModalTable {
   }
 }
 
-ModalTable.id = 0;
+Table.id = 0;
 
-export { ModalTable };
+export { Table };
