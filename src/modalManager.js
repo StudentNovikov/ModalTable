@@ -200,6 +200,7 @@ class ModalManager {
 
   closeModal = () => {
     if (this.stack.length === 1) {
+      this.stack.pop();
       this.modalRef.innerHTML = '';
     } else {
       this.remove();
