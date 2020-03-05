@@ -244,12 +244,16 @@ class Table {
 
   subscribeRegionsSwitch = () => {
     document.querySelector('.language').addEventListener('click',(e) => {
+      const previousLanguage = this.language;
       if(this.language === 'US'){
         this.language = 'RUS'
       } else {
         this.language = 'US';
       }
       e.target.innerHTML = this.language;
+      for(let i = 0 ; i<this.dataManager.getData().length; i+= 1)  {
+        document.querySelector('tbody').innerHTML = document.querySelector('tbody').innerHTML.replace(currencySigns[previousLanguage],currencySigns[this.language]);
+      }
     });
   }
 
