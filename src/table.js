@@ -27,9 +27,6 @@ class Table {
     Table.id += 1;
     this.dataManager = new DataManager(products);
     this.addButtonShowTable();
-    // this.drawTable();
-    // this.drawUpdateAddForm();
-    // this.drawConfirm();
     this.subscribeTableOpener();
   }
 
@@ -136,7 +133,10 @@ class Table {
     this.subscribeAddButton();
     this.subscribeEditButton();
     this.subscribeCloseButton();
+    this.subscribeRegionsSwitch();
   }
+
+
 
   subscribeTableOpener() {
     this.placeForButton.querySelector('#showTable').addEventListener('click', () => {
@@ -242,18 +242,18 @@ class Table {
   }
 
 
-  changeLocalisation(language) {
-    this.changeCurrencySign(language);
-    this.changeDateFormat(language);
+  subscribeRegionsSwitch = () => {
+    document.querySelector('.language').addEventListener('click',(e) => {
+      if(this.language === 'US'){
+        this.language = 'RUS'
+      } else {
+        this.language = 'US';
+      }
+      e.target.innerHTML = this.language;
+      console.log(this.language);
+    });
   }
 
-  changeCurrencySign(language) {
-    this.currencySign = currencySigns(language);
-  }
-
-  changeDateFormat(language) {
-    console.log('dates reformated');
-  }
 }
 
 Table.id = 0;
