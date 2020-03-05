@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 /* eslint-disable import/prefer-default-export */
 
 class ModalManager {
@@ -82,32 +83,32 @@ class ModalManager {
     this.clickYesConfirm();
     this.clickNoConfirm();
 
-    if(this.stack[this.stack.length - 1].type === 'AddUpdate') {
-     this.addFormValidation();
+    if (this.stack[this.stack.length - 1].type === 'AddUpdate') {
+      this.addFormValidation();
     }
   }
 
-  addFormValidation(){
+  addFormValidation() {
     this.disableSubmitAddUpdate();
-    document.getElementById('name').addEventListener('blur',() => {
-      if(document.getElementById('name').value.length < 3 || document.getElementById('name').value.length > 20 || document.getElementById('name').value == '' ){
+    document.getElementById('name').addEventListener('blur', () => {
+      if (document.getElementById('name').value.length < 3 || document.getElementById('name').value.length > 20 || document.getElementById('name').value == '') {
         this.disableSubmitAddUpdate();
-        this.showToolTip('name','Name - required, min 3 chars, max 20 chars');
+        this.showToolTip('name', 'Name - required, min 3 chars, max 20 chars');
       } else {
         this.hideToolTip('name');
-        if(!document.querySelector('*[tooltip]')){
+        if (!document.querySelector('*[tooltip]')) {
           this.enableSubmitAddUpdate();
         }
       }
-    })
+    });
 
     document.getElementById('serialNumber').addEventListener('blur', () => {
-      if(document.getElementById('serialNumber').value.toString().length !== 10){
+      if (document.getElementById('serialNumber').value.toString().length !== 10) {
         this.disableSubmitAddUpdate();
-        this.showToolTip('serialNumber','SerialNumber - required, 10digits');
+        this.showToolTip('serialNumber', 'SerialNumber - required, 10digits');
       } else {
         this.hideToolTip('serialNumber');
-        if(!document.querySelector('*[tooltip]')){
+        if (!document.querySelector('*[tooltip]')) {
           this.enableSubmitAddUpdate();
         }
       }
@@ -115,12 +116,12 @@ class ModalManager {
 
     document.getElementById('count').addEventListener('blur', () => {
       const numberRegex = /^[0-9]*$/;
-      if(!document.getElementById('count').value.match(numberRegex)){
+      if (!document.getElementById('count').value.match(numberRegex)) {
         this.disableSubmitAddUpdate();
-        this.showToolTip('count','Count - only digits');
+        this.showToolTip('count', 'Count - only digits');
       } else {
         this.hideToolTip('count');
-        if(!document.querySelector('*[tooltip]')){
+        if (!document.querySelector('*[tooltip]')) {
           this.enableSubmitAddUpdate();
         }
       }
@@ -128,46 +129,46 @@ class ModalManager {
 
     document.getElementById('price').addEventListener('blur', () => {
       const floatRegex = /^[0-9]*\.?[0-9]+$/;
-      if(!document.getElementById('price').value.match(floatRegex) && document.getElementById('price').value !== ''){
+      if (!document.getElementById('price').value.match(floatRegex) && document.getElementById('price').value !== '') {
         this.disableSubmitAddUpdate();
-        this.showToolTip('price','Price - only numbers');
+        this.showToolTip('price', 'Price - only numbers');
       } else {
         this.hideToolTip('price');
-        if(!document.querySelector('*[tooltip]')){
+        if (!document.querySelector('*[tooltip]')) {
           this.enableSubmitAddUpdate();
         }
       }
     });
 
     document.getElementById('date').addEventListener('blur', () => {
-       if( (new Date(new Date() - new Date(document
-        .getElementById('date').value)).getUTCFullYear() - 1970) !== 0 ){
-          this.disableSubmitAddUpdate();
-          this.showToolTip('date','Date: not earlier than current moment of time, not further than 1 year from current moment of time.');
+      if ((new Date(new Date() - new Date(document
+        .getElementById('date').value)).getUTCFullYear() - 1970) !== 0) {
+        this.disableSubmitAddUpdate();
+        this.showToolTip('date', 'Date: not earlier than current moment of time, not further than 1 year from current moment of time.');
       } else {
         this.hideToolTip('date');
-        if(!document.querySelector('*[tooltip]')){
+        if (!document.querySelector('*[tooltip]')) {
           this.enableSubmitAddUpdate();
         }
       }
     });
   }
 
-  disableSubmitAddUpdate(){
+  disableSubmitAddUpdate() {
     document.getElementById('confirm-yes').disabled = true;
   }
 
-  enableSubmitAddUpdate(){
-    if(document.getElementById('name').value !== '' && document.getElementById('serialNumber').value !== ''){
+  enableSubmitAddUpdate() {
+    if (document.getElementById('name').value !== '' && document.getElementById('serialNumber').value !== '') {
       document.getElementById('confirm-yes').disabled = false;
     }
   }
 
-  showToolTip(index,message){
-    document.getElementById(index).parentNode.firstElementChild.firstElementChild.setAttribute('tooltip',message);
+  showToolTip(index, message) {
+    document.getElementById(index).parentNode.firstElementChild.firstElementChild.setAttribute('tooltip', message);
   }
 
-  hideToolTip(index){
+  hideToolTip(index) {
     document.getElementById(index).parentNode.firstElementChild.firstElementChild.removeAttribute('tooltip');
   }
 
@@ -181,9 +182,9 @@ class ModalManager {
   clickNotInModal() {
     this.modalRef.addEventListener('click', (e) => {
       if (e.target.classList == 'modal' && this.stack[this.stack.length - 1].type !== 'Confirmation') {
-        this.add({ type: 'Confirmation', onSuccess: this.closeModal ,render: () => {}})
+        this.add({ type: 'Confirmation', onSuccess: this.closeModal, render: () => {} });
         this.show();
-      } else if(e.target.classList == 'modal'){
+      } else if (e.target.classList == 'modal') {
         this.closeModal();
       }
     });
@@ -221,6 +222,5 @@ class ModalManager {
     this.stack.pop();
     this.show(this.stack[this.stack.length - 1]);
   }
-
 }
 export { ModalManager };
