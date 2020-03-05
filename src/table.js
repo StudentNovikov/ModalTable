@@ -250,7 +250,6 @@ class Table {
         this.language = 'US';
       }
       e.target.innerHTML = this.language;
-      console.log(this.language);
     });
   }
 
