@@ -209,9 +209,9 @@ class Table {
   fillInUpdateForm = () => {
    document.getElementById('name').value = this.currentProduct.name;
    document.getElementById('serialNumber').value = this.currentProduct.serialNumber;
-   document.getElementById('count').value = this.currentProduct.count;
-   document.getElementById('price').value = this.currentProduct.price;
-   document.getElementById('isAvaliable').checked = this.currentProduct.isAvaliable;
+   document.getElementById('count').value = this.currentProduct.count || 0;
+   document.getElementById('price').value = this.currentProduct.price || '-.--' ;
+   document.getElementById('isAvaliable').checked = this.currentProduct.isAvaliable || false;
    document.getElementById('date').value = this.currentProduct.dateAdded;
   }
 

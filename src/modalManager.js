@@ -114,7 +114,7 @@ class ModalManager {
     });
 
     document.getElementById('count').addEventListener('blur', () => {
-      const numberRegex = /^[0-9]+$/;
+      const numberRegex = /^[0-9]*$/;
       if(!document.getElementById('count').value.match(numberRegex)){
         this.disableSubmitAddUpdate();
         this.showToolTip('count','Count - only digits');
@@ -128,7 +128,7 @@ class ModalManager {
 
     document.getElementById('price').addEventListener('blur', () => {
       const floatRegex = /^[0-9]*\.?[0-9]+$/;
-      if(!document.getElementById('price').value.match(floatRegex)){
+      if(!document.getElementById('price').value.match(floatRegex) && document.getElementById('price').value !== ''){
         this.disableSubmitAddUpdate();
         this.showToolTip('price','Price - only numbers');
       } else {
@@ -140,8 +140,8 @@ class ModalManager {
     });
 
     document.getElementById('date').addEventListener('blur', () => {
-       if((new Date(new Date() - new Date(document
-        .getElementById('date').value)).getUTCFullYear() - 1970) !== 0){
+       if( (new Date(new Date() - new Date(document
+        .getElementById('date').value)).getUTCFullYear() - 1970) !== 0 ){
           this.disableSubmitAddUpdate();
           this.showToolTip('date','Date: not earlier than current moment of time, not further than 1 year from current moment of time.');
       } else {
