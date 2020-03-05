@@ -105,8 +105,8 @@ class Table {
       <tr id="${index}">
       <th>${product.name}</th>
       <td>${product.serialNumber}</td>
-      <td>${product.count}</td>
-      <td>${this.currencySign} ${Number.parseFloat(product.price).toFixed(2)}</td>
+      <td>${product.count ? product.count : 0}</td>
+      <td>${this.currencySign} ${product.price ? Number.parseFloat(product.price).toFixed(2) : '-,--'}</td>
       <td>${product.isAvaliable ? '+' : '-'}</td>
       <td>${product.dateAdded.replace('T',' ')}</td>
       <td><button class="btn btn-small btn-green update-button">Edit</button> <button class="btn btn-small btn-red delete-button">Delete</button></td>

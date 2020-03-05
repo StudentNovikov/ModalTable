@@ -43,11 +43,11 @@ class ModalManager {
               </div>
               <div>
                 <p><label for="count">Count:</label></p>
-                <input type="number" name="inputSerialNumber" id="count">
+                <input type="number" name="inputSerialNumber" placeholder="0" id="count">
               </div>
                <div>
                 <p><label for="price">Price:</label></p>
-                <input type="text" name="inputPrice" id="price">
+                <input type="text" name="inputPrice" placeholder="-.--" id="price">
               </div>
               <br>
               <label for="isAvaliable" class="my-1 inline-block va-sub">Is Avaliable:</label>
@@ -90,7 +90,7 @@ class ModalManager {
   addFormValidation(){
     this.disableSubmitAddUpdate();
     document.getElementById('name').addEventListener('blur',() => {
-      if(document.getElementById('name').value.length < 3 || document.getElementById('name').value.length > 20){
+      if(document.getElementById('name').value.length < 3 || document.getElementById('name').value.length > 20 || document.getElementById('name').value == '' ){
         this.disableSubmitAddUpdate();
         this.showToolTip('name','Name - required, min 3 chars, max 20 chars');
       } else {
@@ -158,7 +158,9 @@ class ModalManager {
   }
 
   enableSubmitAddUpdate(){
-    document.getElementById('confirm-yes').disabled = false;
+    if(document.getElementById('name').value !== '' && document.getElementById('serialNumber').value !== ''){
+      document.getElementById('confirm-yes').disabled = false;
+    }
   }
 
   showToolTip(index,message){
