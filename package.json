@@ -1,0 +1,31 @@
+{
+  "name": "modaltable",
+  "version": "1.0.0",
+  "description": "modal table with add edit sort functionality",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/StudentNovikov/ModalTable.git"
+  },
+  "keywords": [
+    "table",
+    "modal"
+  ],
+  "author": "Alex N",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/StudentNovikov/ModalTable/issues"
+  },
+  "homepage": "https://github.com/StudentNovikov/ModalTable#readme",
+  "devDependencies": {
+    "eslint": "^6.1.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.18.3",
+    "eslint-plugin-react-hooks": "^1.7.0"
+  }
+}
