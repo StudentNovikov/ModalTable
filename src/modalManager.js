@@ -33,19 +33,29 @@ class ModalManager {
               <button class="btn btn-green" id="confirm-no"> NO </button>
             </div>
             <form>
-              <p><label for="name">Name:</label></p>
-              <input type="text" name="inputName" id="name">
-              <p><label for="serialNumber">Serial Number:</label></p>
-              <input type="text" name="inputSerialNumber" id="serialNumber">
-              <p><label for="count">Count:</label></p>
-              <input type="number" name="inputSerialNumber" id="count">
-              <p><label for="price">Price:</label></p>
-              <input type="text" name="inputPrice" id="price">
+              <div>
+                <p><label for="name">Name:</label></p>
+                <input type="text" name="inputName"  id="name">
+              </div>
+              <div>
+                <p><label for="serialNumber">Serial Number:</label></p>
+                <input type="text" name="inputSerialNumber" id="serialNumber">
+              </div>
+              <div>
+                <p><label for="count">Count:</label></p>
+                <input type="number" name="inputSerialNumber" id="count">
+              </div>
+               <div>
+                <p><label for="price">Price:</label></p>
+                <input type="text" name="inputPrice" id="price">
+              </div>
               <br>
               <label for="isAvaliable" class="my-1 inline-block va-sub">Is Avaliable:</label>
               <input type="checkbox" name="inputIsAvaliable" id="isAvaliable" value="isAvaliable">
-              <p><label for="date">Date:</label></p>
-              <input type="datetime-local" name="inputDate" id="date">
+              <div>
+                <p><label for="date">Date:</label></p>
+                <input type="datetime-local" name="inputDate" id="date">
+              </div>
               <br>
             </form>
             <button class="btn btn-green mt-1" id="confirm-yes"> Confirm </button>
@@ -78,10 +88,16 @@ class ModalManager {
   }
 
   addFormValidation(){
+    this.disableSubmitAddUpdate();
     document.getElementById('name').addEventListener('blur',() => {
       if(document.getElementById('name').value.length < 3 || document.getElementById('name').value.length > 20){
         this.disableSubmitAddUpdate();
         this.showToolTip('name','Name - required, min 3 chars, max 20 chars');
+      } else {
+        this.hideToolTip('name');
+        if(!document.querySelector('*[tooltip]')){
+          this.enableSubmitAddUpdate();
+        }
       }
     })
 
@@ -89,6 +105,11 @@ class ModalManager {
       if(document.getElementById('serialNumber').value.toString().length !== 10){
         this.disableSubmitAddUpdate();
         this.showToolTip('serialNumber','SerialNumber - required, 10digits');
+      } else {
+        this.hideToolTip('serialNumber');
+        if(!document.querySelector('*[tooltip]')){
+          this.enableSubmitAddUpdate();
+        }
       }
     });
 
@@ -97,6 +118,11 @@ class ModalManager {
       if(!document.getElementById('count').value.match(numberRegex)){
         this.disableSubmitAddUpdate();
         this.showToolTip('count','Count - only digits');
+      } else {
+        this.hideToolTip('count');
+        if(!document.querySelector('*[tooltip]')){
+          this.enableSubmitAddUpdate();
+        }
       }
     });
 
@@ -105,14 +131,24 @@ class ModalManager {
       if(!document.getElementById('price').value.match(floatRegex)){
         this.disableSubmitAddUpdate();
         this.showToolTip('price','Price - only numbers');
+      } else {
+        this.hideToolTip('price');
+        if(!document.querySelector('*[tooltip]')){
+          this.enableSubmitAddUpdate();
+        }
       }
     });
 
     document.getElementById('date').addEventListener('blur', () => {
-      console.log((new Date(new Date() - new Date(document.getElementById('date').value)).getUTCFullYear() - 1970));
-      if((new Date(new Date() - new Date(document.getElementById('date').value)).getUTCFullYear() - 1970) !== 0){
-        this.disableSubmitAddUpdate();
-        this.showToolTip('date','Date: not earlier than current moment of time, not further than 1 year from current moment of time.');
+       if((new Date(new Date() - new Date(document
+        .getElementById('date').value)).getUTCFullYear() - 1970) !== 0){
+          this.disableSubmitAddUpdate();
+          this.showToolTip('date','Date: not earlier than current moment of time, not further than 1 year from current moment of time.');
+      } else {
+        this.hideToolTip('date');
+        if(!document.querySelector('*[tooltip]')){
+          this.enableSubmitAddUpdate();
+        }
       }
     });
   }
@@ -121,11 +157,16 @@ class ModalManager {
     document.getElementById('confirm-yes').disabled = true;
   }
 
+  enableSubmitAddUpdate(){
+    document.getElementById('confirm-yes').disabled = false;
+  }
+
   showToolTip(index,message){
-    document.getElementById(index).classList.add('tooltip');
-    console.log('-------------');
-    console.log(index);
-    console.log(message);
+    document.getElementById(index).parentNode.firstElementChild.firstElementChild.setAttribute('tooltip',message);
+  }
+
+  hideToolTip(index){
+    document.getElementById(index).parentNode.firstElementChild.firstElementChild.removeAttribute('tooltip');
   }
 
   closeButtonClick = () => {
