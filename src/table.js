@@ -192,7 +192,7 @@ class Table {
     this.rootRef.querySelector('.filter-container input').addEventListener('keydown', (e) => {
       //checking if pressed button is 'enter'
       if (e.which == 13 && e.target.value.trim()) {
-        this.dataManager.addFilter(e.target.value);
+        this.dataManager.addFilter(e.target.value.trim());
         this.drawTable();
         e.preventDefault();
       }
