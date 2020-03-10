@@ -112,7 +112,7 @@ class Table {
       <td>${product.count ? product.count : 0}</td>
       <td>${product.price ? this.formatCurrency(product.price) : '-,--'}</td>
       <td>${product.isAvaliable ? '+' : '-'}</td>
-      <td>${product.dateAdded.replace('T',' ')}</td>
+      <td>${product.dateAdded.replace('T',' ') || '-'}</td>
       <td><button class="btn btn-small btn-green update-button">Edit</button> <button class="btn btn-small btn-red delete-button">Delete</button></td>
     </tr>`, '');
   }

@@ -154,11 +154,11 @@ class ModalManager {
     });
 
     document.getElementById('date').addEventListener('blur', () => {
-      if ((new Date(new Date() - new Date(document
-        .getElementById('date').value)).getUTCFullYear() - 1970) !== 0) {
-        this.disableSubmitAddUpdate();
-        this.showToolTip('date', 'Date: not earlier than current moment of time, not further than 1 year from current moment of time.');
-      } else {
+      if((document.getElementById('date').value !== '') && ((new Date(new Date() - new Date(document
+          .getElementById('date').value)).getUTCFullYear() - 1970) !== 0) ){
+          this.disableSubmitAddUpdate();
+          this.showToolTip('date', 'Date: not earlier than current moment of time, not further than 1 year from current moment of time.');
+        } else {
         this.hideToolTip('date');
         if (!document.querySelector('*[tooltip]')) {
           this.enableSubmitAddUpdate();
