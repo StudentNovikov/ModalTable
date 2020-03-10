@@ -130,6 +130,9 @@ class Table {
   });
 
   formatCurrency = (price) => {
+    if(!price) {
+      return '';
+    }
     return this.language === 'US' ? this.formatterUS.format(price) : this.formatterRUS.format(price);
   }
 
@@ -232,6 +235,9 @@ class Table {
   }
 
   getPriceFromFormat = (formattedPrice) => {
+    if(!formattedPrice){
+      return '';
+    }
     let numberRegex = /([0-9.])/g;
     if (this.language === 'RUS') {
       numberRegex = /([0-9,])/g;
@@ -250,7 +256,7 @@ class Table {
    document.getElementById('name').value = this.currentProduct.name;
    document.getElementById('serialNumber').value = this.currentProduct.serialNumber;
    document.getElementById('count').value = this.currentProduct.count || 0;
-   document.getElementById('price').value = this.formatCurrency(this.currentProduct.price) || '-.--' ;
+   document.getElementById('price').value = this.formatCurrency(this.currentProduct.price);
    document.getElementById('isAvaliable').checked = this.currentProduct.isAvaliable || false;
    document.getElementById('date').value = this.currentProduct.dateAdded;
   }
@@ -264,6 +270,7 @@ class Table {
     document.getElementById('addRow').addEventListener('click',(e) => {
       modalManager.add({ type: 'AddUpdate', render: () => {}, onSuccess: this.add });
       modalManager.show();
+      this.subscribeInputPrice();
     })
   }
 
