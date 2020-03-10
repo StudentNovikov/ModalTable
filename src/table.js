@@ -165,6 +165,11 @@ class Table {
 
   subscribeTableOpener() {
     this.placeForButton.querySelector('#showTable').addEventListener('click', () => {
+      this.dataManager.filterArray = [];
+      this.dataManager.sortBy = {
+        field: 'dateAdded',
+        direction: 'descending',
+      };
       modalManager.add({ type: 'Table', render: this.drawTable });
       modalManager.show();
     });
