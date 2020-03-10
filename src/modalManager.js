@@ -194,7 +194,7 @@ class ModalManager {
 
   clickNotInModal() {
     this.modalRef.addEventListener('click', (e) => {
-      if (e.target.classList == 'modal' && this.stack[this.stack.length - 1].type !== 'Confirmation') {
+      if (e.target.classList == 'modal' && this.stack[this.stack.length - 1].type !== 'Confirmation' && this.stack[this.stack.length - 1].type !== 'Table') {
         this.add({ type: 'Confirmation', onSuccess: this.closeModal, render: () => {} });
         this.show();
       } else if (e.target.classList == 'modal') {
