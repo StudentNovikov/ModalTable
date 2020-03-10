@@ -26,6 +26,19 @@ class ModalManager {
       </div>
       </div>`;
       },
+      EmptyTableForm: () => {
+        this.modalRef.innerHTML = `<div class="modal">
+      <div class="modal-content confirm-window">
+        <button id="confirm-yes" hidden> Yes </button>
+        <span class="close" hidden>&times;</span>
+        <h2 class="text-center my-1"> This table is empty </h2>
+        <div class="flex">
+          <button class="btn btn-green" id="addRowFromEmpty"> Add a row </button>
+          <button class="btn btn-red" id="confirm-no" > Close </button>
+        </div>
+      </div>
+      </div>`;
+      },
       AddUpdate: () => {
         this.modalRef.innerHTML = `<div class="modal">
           <div class="modal-content add-confirm-modal">
@@ -194,7 +207,7 @@ class ModalManager {
     document.getElementById('confirm-yes').addEventListener('click', () => {
       this.stack[this.stack.length - 1].onSuccess();
       this.closeModal();
-    });
+    } );
   }
 
   clickNoConfirm = () => {
@@ -202,8 +215,8 @@ class ModalManager {
   }
 
   closeModal = () => {
-    if (this.stack.length === 1) {
-      this.stack.pop();
+    if ((this.stack.length === 1) || (this.stack[this.stack.length - 1].type == 'EmptyTableForm')) {
+      this.stack = [];
       this.modalRef.innerHTML = '';
     } else {
       this.remove();

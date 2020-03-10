@@ -40,18 +40,25 @@ class Table {
   }
 
   drawTable = () => {
-    this.createRootContainer();
-    this.createTableContainer();
-    this.drawTitle();
-    this.drawFilter();
-    this.createTable();
-    this.drawHead();
-    this.drawBody();
-    this.drawButtons();
-    this.subscribeTableEvents();
-  }
+    if(this.dataManager.getData().length === 0){
+      modalManager.add({ type: 'EmptyTableForm', render: () => {}})
+      modalManager.show();
+      this.subscribeAddRowFromEmpty();
+    } else
+     {
+      this.createRootContainer();
+      this.createTableContainer();
+      this.drawTitle();
+      this.drawFilter();
+      this.createTable();
+      this.drawHead();
+      this.drawBody();
+      this.drawButtons();
+      this.subscribeTableEvents();
+     }
+    }
 
-  createTableContainer() {
+    createTableContainer() {
     this.rootRef.innerHTML += '<div class="table-container"></div>';
     this.tableContainerRef = this.rootRef.querySelector('.table-container');
   }
@@ -117,7 +124,6 @@ class Table {
 
   delete = () => {
     this.dataManager.delete(this.currentIndex);
-    this.drawTable();
   }
 
   drawButtons() {
@@ -220,11 +226,20 @@ class Table {
     this.add();
   }
 
-  subscribeAddButton(){
-    this.rootRef.querySelector('#addRow').addEventListener('click',(e) => {
+  subscribeAddButton = () => {
+    document.getElementById('addRow').addEventListener('click',(e) => {
       modalManager.add({ type: 'AddUpdate', render: () => {}, onSuccess: this.add });
       modalManager.show();
     })
+  }
+
+  subscribeAddRowFromEmpty = () => {
+    document.getElementById('addRowFromEmpty').addEventListener('click',(e) => {
+      modalManager.stack.pop();
+      modalManager.add({ type: 'AddUpdate', render: () => {}, onSuccess: this.add });
+      modalManager.show();
+    })
+
   }
 
   add = () => {
