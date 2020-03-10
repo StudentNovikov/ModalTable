@@ -165,6 +165,12 @@ class ModalManager {
         }
       }
     });
+
+    document.getElementById('isAvaliable').addEventListener('click', () => {
+      if (!document.querySelector('*[tooltip]')) {
+        this.enableSubmitAddUpdate();
+      }
+    });
   }
 
   disableSubmitAddUpdate() {
