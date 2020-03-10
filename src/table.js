@@ -110,11 +110,27 @@ class Table {
       <th>${product.name}</th>
       <td>${product.serialNumber}</td>
       <td>${product.count ? product.count : 0}</td>
-      <td>${this.currencySign} ${product.price ? Number.parseFloat(product.price).toFixed(2) : '-,--'}</td>
+      <td>${product.price ? this.formatCurrency(product.price) : '-,--'}</td>
       <td>${product.isAvaliable ? '+' : '-'}</td>
       <td>${product.dateAdded.replace('T',' ')}</td>
       <td><button class="btn btn-small btn-green update-button">Edit</button> <button class="btn btn-small btn-red delete-button">Delete</button></td>
     </tr>`, '');
+  }
+
+  formatterUS = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 2
+  });
+
+  formatterRUS = new Intl.NumberFormat('ru-RU', {
+    style: 'currency',
+    currency: 'RUB',
+    minimumFractionDigits: 2
+  });
+
+  formatCurrency = (price) => {
+    return this.language === 'US' ? this.formatterUS.format(price) : this.formatterRUS.format(price);
   }
 
   confirmDelete = () => {
@@ -201,8 +217,26 @@ class Table {
         modalManager.add({ type: 'AddUpdate', render: this.fillInUpdateForm, onSuccess: this.update });
         modalManager.show();
         this.fillInUpdateForm();
+        this.subscribeInputPrice();
       }
     })
+  }
+
+  subscribeInputPrice = () => {
+    document.getElementById('price').addEventListener('focus',(e) => {
+      e.target.value = this.getPriceFromFormat(e.target.value);
+    });
+    document.getElementById('price').addEventListener('blur',(e) => {
+      e.target.value = this.formatCurrency(e.target.value);
+    });
+  }
+
+  getPriceFromFormat = (formattedPrice) => {
+    let numberRegex = /([0-9.])/g;
+    if (this.language === 'RUS') {
+      numberRegex = /([0-9,])/g;
+    }
+    return formattedPrice.match(numberRegex).join('').replace(',','.');
   }
 
   subscribeCloseButton = () =>{
@@ -216,7 +250,7 @@ class Table {
    document.getElementById('name').value = this.currentProduct.name;
    document.getElementById('serialNumber').value = this.currentProduct.serialNumber;
    document.getElementById('count').value = this.currentProduct.count || 0;
-   document.getElementById('price').value = this.currentProduct.price || '-.--' ;
+   document.getElementById('price').value = this.formatCurrency(this.currentProduct.price) || '-.--' ;
    document.getElementById('isAvaliable').checked = this.currentProduct.isAvaliable || false;
    document.getElementById('date').value = this.currentProduct.dateAdded;
   }
@@ -250,7 +284,7 @@ class Table {
     const name = document.getElementById('name').value;
     const serialNumber = document.getElementById('serialNumber').value;
     const count = document.getElementById('count').value;
-    const price = document.getElementById('price').value;
+    const price = this.getPriceFromFormat(document.getElementById('price').value);
     const isAvaliable = document.getElementById('isAvaliable').checked;
     const dateAdded = document.getElementById('date').value;
     return {name, serialNumber, count, price, isAvaliable, dateAdded}
@@ -259,17 +293,17 @@ class Table {
 
   subscribeRegionsSwitch = () => {
     document.querySelector('.language').addEventListener('click',(e) => {
-      const previousLanguage = this.language;
-      if(this.language === 'US'){
-        this.language = 'RUS'
-      } else {
-        this.language = 'US';
-      }
-      e.target.innerHTML = this.language;
-      for(let i = 0 ; i<this.dataManager.getData().length; i+= 1)  {
-        document.querySelector('tbody').innerHTML = document.querySelector('tbody').innerHTML.replace(currencySigns[previousLanguage],currencySigns[this.language]);
-      }
+      this.toggleLanguage();
+      this.drawTable();
     });
+  }
+
+  toggleLanguage = () => {
+    if(this.language === 'US'){
+      this.language = 'RUS';
+    } else {
+      this.language = 'US';
+    }
   }
 
 }
