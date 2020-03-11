@@ -105,8 +105,8 @@ class Table {
 
   drawBody = () => {
     this.tableRef.querySelector('tbody').innerHTML = this.dataManager.getData()
-      .reduce((tableHtml, product, index) => `${tableHtml}
-      <tr id="${index}">
+      .reduce((tableHtml, product) => `${tableHtml}
+      <tr id="${product.index}">
       <th>${product.name}</th>
       <td>${product.serialNumber}</td>
       <td>${product.count ? product.count : 0}</td>
@@ -160,8 +160,6 @@ class Table {
     this.subscribeCloseButton();
     this.subscribeRegionsSwitch();
   }
-
-
 
   subscribeTableOpener() {
     this.placeForButton.querySelector('#showTable').addEventListener('click', () => {
@@ -221,7 +219,7 @@ class Table {
     this.rootRef.querySelector('tbody').addEventListener('click',(e) => {
       if(e.target.classList.contains('update-button')){
         this.currentIndex = e.target.parentNode.parentNode.id;
-        this.currentProduct = this.dataManager.getData()[this.currentIndex];
+        this.currentProduct = this.dataManager.getItemByIndex(this.currentIndex);
         modalManager.add({ type: 'AddUpdate', render: this.fillInUpdateForm, onSuccess: this.update });
         modalManager.show();
         this.fillInUpdateForm();
@@ -285,7 +283,6 @@ class Table {
       modalManager.add({ type: 'AddUpdate', render: () => {}, onSuccess: this.add });
       modalManager.show();
     })
-
   }
 
   add = () => {
@@ -302,7 +299,6 @@ class Table {
     return {name, serialNumber, count, price, isAvaliable, dateAdded}
   }
 
-
   subscribeRegionsSwitch = () => {
     document.querySelector('.language').addEventListener('click',(e) => {
       this.toggleLanguage();
@@ -317,7 +313,6 @@ class Table {
       this.language = 'US';
     }
   }
-
 }
 
 Table.id = 0;
