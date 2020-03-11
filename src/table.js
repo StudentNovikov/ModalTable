@@ -103,6 +103,8 @@ class Table {
       .innerHTML += `<span class="sort-triangle"> ${sortDirection[this.dataManager.getSortDirection()]}</span>`;
   }
 
+  // <td>${product.dateAdded.replace('T',' ') || '-'}</td>
+
   drawBody = () => {
     this.tableRef.querySelector('tbody').innerHTML = this.dataManager.getData()
       .reduce((tableHtml, product) => `${tableHtml}
@@ -112,7 +114,7 @@ class Table {
       <td>${product.count ? product.count : 0}</td>
       <td>${product.price ? this.formatCurrency(product.price) : '-,--'}</td>
       <td>${product.isAvaliable ? '+' : '-'}</td>
-      <td>${product.dateAdded.replace('T',' ') || '-'}</td>
+      <td>${product.dateAdded ? this.formatDate(product.dateAdded) : '-'}</td>
       <td><button class="btn btn-small btn-green update-button">Edit</button> <button class="btn btn-small btn-red delete-button">Delete</button></td>
     </tr>`, '');
   }
@@ -134,6 +136,21 @@ class Table {
       return '';
     }
     return this.language === 'US' ? this.formatterUS.format(price) : this.formatterRUS.format(price);
+  }
+
+  formatDate = (date) => {
+    const dateoObj = new Date(date);
+    const dateOptionsUS = {
+      year: 'numeric', month: 'numeric', day: 'numeric',
+      hour: 'numeric', minute: 'numeric', second: 'numeric',
+    };
+    const dateOptionsRUS = {
+      year: 'numeric', day: 'numeric', month: 'numeric',
+      hour: 'numeric', minute: 'numeric', second: 'numeric',
+      hour12: false,
+    }
+
+    return this.language === 'US' ? dateoObj.toLocaleString('en-US',dateOptionsUS) : dateoObj.toLocaleString('ru-RU',dateOptionsRUS);
   }
 
   confirmDelete = () => {

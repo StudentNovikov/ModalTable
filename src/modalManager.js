@@ -224,7 +224,6 @@ class ModalManager {
     if ((this.stack.length === 1) || (this.stack[this.stack.length - 1].type == 'EmptyTableForm')) {
       this.stack = [];
       this.modalRef.innerHTML = '';
-      console.log('closing');
     } else {
       this.remove();
     }
