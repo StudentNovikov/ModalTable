@@ -26,6 +26,19 @@ class ModalManager {
       </div>
       </div>`;
       },
+      EmptyTableForm: () => {
+        this.modalRef.innerHTML = `<div class="modal">
+      <div class="modal-content confirm-window">
+        <button id="confirm-yes" hidden> Yes </button>
+        <span class="close" hidden>&times;</span>
+        <h2 class="text-center my-1"> This table is empty </h2>
+        <div class="flex">
+          <button class="btn btn-green" id="addRowFromEmpty"> Add a row </button>
+          <button class="btn btn-red" id="confirm-no" > Close </button>
+        </div>
+      </div>
+      </div>`;
+      },
       AddUpdate: () => {
         this.modalRef.innerHTML = `<div class="modal">
           <div class="modal-content add-confirm-modal">
@@ -141,15 +154,21 @@ class ModalManager {
     });
 
     document.getElementById('date').addEventListener('blur', () => {
-      if ((new Date(new Date() - new Date(document
-        .getElementById('date').value)).getUTCFullYear() - 1970) !== 0) {
-        this.disableSubmitAddUpdate();
-        this.showToolTip('date', 'Date: not earlier than current moment of time, not further than 1 year from current moment of time.');
-      } else {
+      if((document.getElementById('date').value !== '') && ((new Date(new Date() - new Date(document
+          .getElementById('date').value)).getUTCFullYear() - 1970) !== 0) ){
+          this.disableSubmitAddUpdate();
+          this.showToolTip('date', 'Date: not earlier than current moment of time, not further than 1 year from current moment of time.');
+        } else {
         this.hideToolTip('date');
         if (!document.querySelector('*[tooltip]')) {
           this.enableSubmitAddUpdate();
         }
+      }
+    });
+
+    document.getElementById('isAvaliable').addEventListener('click', () => {
+      if (!document.querySelector('*[tooltip]')) {
+        this.enableSubmitAddUpdate();
       }
     });
   }
@@ -181,7 +200,7 @@ class ModalManager {
 
   clickNotInModal() {
     this.modalRef.addEventListener('click', (e) => {
-      if (e.target.classList == 'modal' && this.stack[this.stack.length - 1].type !== 'Confirmation') {
+      if (e.target.classList == 'modal' && this.stack[this.stack.length - 1].type !== 'Confirmation' && this.stack[this.stack.length - 1].type !== 'Table') {
         this.add({ type: 'Confirmation', onSuccess: this.closeModal, render: () => {} });
         this.show();
       } else if (e.target.classList == 'modal') {
@@ -194,7 +213,7 @@ class ModalManager {
     document.getElementById('confirm-yes').addEventListener('click', () => {
       this.stack[this.stack.length - 1].onSuccess();
       this.closeModal();
-    });
+    } );
   }
 
   clickNoConfirm = () => {
@@ -202,8 +221,8 @@ class ModalManager {
   }
 
   closeModal = () => {
-    if (this.stack.length === 1) {
-      this.stack.pop();
+    if ((this.stack.length === 1) || (this.stack[this.stack.length - 1].type == 'EmptyTableForm')) {
+      this.stack = [];
       this.modalRef.innerHTML = '';
     } else {
       this.remove();

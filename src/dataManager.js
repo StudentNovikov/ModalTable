@@ -2,6 +2,7 @@
 class DataManager {
   constructor(data) {
     this.data = data;
+    this.addIndexesToData();
     this.filterArray = [];
     this.sortBy = {
       field: 'dateAdded',
@@ -9,8 +10,19 @@ class DataManager {
     };
   }
 
+  addIndexesToData = () => {
+    this.data = this.data.map((product,index) => {
+      product.index = index;
+      return product;
+    });
+  }
+
   getData() {
     return this.sort(this.filter());
+  }
+
+  getItemByIndex(index) {
+    return this.data.filter(product => product.index == index)[0];
   }
 
   addFilter(filter) {
@@ -48,10 +60,21 @@ class DataManager {
 
   add(row) {
     this.data.push(row);
+    this.data[this.data.length - 1].index = this.findMaxIndex() + 1;
+  }
+
+  findMaxIndex(){
+    return this.data.reduce((maxIndex,item) => {
+      if(item.index > maxIndex){
+        return item.index;
+      } else {
+        return maxIndex;
+      }
+    },0)
   }
 
   delete(index) {
-    this.data.splice(index, 1);
+    this.data = this.data.filter(product => product.index != index);
   }
 
   filter() {

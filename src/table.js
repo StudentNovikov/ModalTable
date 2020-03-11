@@ -40,18 +40,25 @@ class Table {
   }
 
   drawTable = () => {
-    this.createRootContainer();
-    this.createTableContainer();
-    this.drawTitle();
-    this.drawFilter();
-    this.createTable();
-    this.drawHead();
-    this.drawBody();
-    this.drawButtons();
-    this.subscribeTableEvents();
-  }
+    if(this.dataManager.getData().length === 0){
+      modalManager.add({ type: 'EmptyTableForm', render: () => {}})
+      modalManager.show();
+      this.subscribeAddRowFromEmpty();
+    } else
+     {
+      this.createRootContainer();
+      this.createTableContainer();
+      this.drawTitle();
+      this.drawFilter();
+      this.createTable();
+      this.drawHead();
+      this.drawBody();
+      this.drawButtons();
+      this.subscribeTableEvents();
+     }
+    }
 
-  createTableContainer() {
+    createTableContainer() {
     this.rootRef.innerHTML += '<div class="table-container"></div>';
     this.tableContainerRef = this.rootRef.querySelector('.table-container');
   }
@@ -96,18 +103,54 @@ class Table {
       .innerHTML += `<span class="sort-triangle"> ${sortDirection[this.dataManager.getSortDirection()]}</span>`;
   }
 
+  // <td>${product.dateAdded.replace('T',' ') || '-'}</td>
+
   drawBody = () => {
     this.tableRef.querySelector('tbody').innerHTML = this.dataManager.getData()
-      .reduce((tableHtml, product, index) => `${tableHtml}
-      <tr id="${index}">
+      .reduce((tableHtml, product) => `${tableHtml}
+      <tr id="${product.index}">
       <th>${product.name}</th>
       <td>${product.serialNumber}</td>
       <td>${product.count ? product.count : 0}</td>
-      <td>${this.currencySign} ${product.price ? Number.parseFloat(product.price).toFixed(2) : '-,--'}</td>
+      <td>${product.price ? this.formatCurrency(product.price) : '-,--'}</td>
       <td>${product.isAvaliable ? '+' : '-'}</td>
-      <td>${product.dateAdded.replace('T',' ')}</td>
+      <td>${product.dateAdded ? this.formatDate(product.dateAdded) : '-'}</td>
       <td><button class="btn btn-small btn-green update-button">Edit</button> <button class="btn btn-small btn-red delete-button">Delete</button></td>
     </tr>`, '');
+  }
+
+  formatterUS = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 2
+  });
+
+  formatterRUS = new Intl.NumberFormat('ru-RU', {
+    style: 'currency',
+    currency: 'RUB',
+    minimumFractionDigits: 2
+  });
+
+  formatCurrency = (price) => {
+    if(!price) {
+      return '';
+    }
+    return this.language === 'US' ? this.formatterUS.format(price) : this.formatterRUS.format(price);
+  }
+
+  formatDate = (date) => {
+    const dateoObj = new Date(date);
+    const dateOptionsUS = {
+      year: 'numeric', month: 'numeric', day: 'numeric',
+      hour: 'numeric', minute: 'numeric', second: 'numeric',
+    };
+    const dateOptionsRUS = {
+      year: 'numeric', day: 'numeric', month: 'numeric',
+      hour: 'numeric', minute: 'numeric', second: 'numeric',
+      hour12: false,
+    }
+
+    return this.language === 'US' ? dateoObj.toLocaleString('en-US',dateOptionsUS) : dateoObj.toLocaleString('ru-RU',dateOptionsRUS);
   }
 
   confirmDelete = () => {
@@ -117,7 +160,6 @@ class Table {
 
   delete = () => {
     this.dataManager.delete(this.currentIndex);
-    this.drawTable();
   }
 
   drawButtons() {
@@ -136,10 +178,13 @@ class Table {
     this.subscribeRegionsSwitch();
   }
 
-
-
   subscribeTableOpener() {
     this.placeForButton.querySelector('#showTable').addEventListener('click', () => {
+      this.dataManager.filterArray = [];
+      this.dataManager.sortBy = {
+        field: 'dateAdded',
+        direction: 'descending',
+      };
       modalManager.add({ type: 'Table', render: this.drawTable });
       modalManager.show();
     });
@@ -162,7 +207,7 @@ class Table {
     this.rootRef.querySelector('.filter-container input').addEventListener('keydown', (e) => {
       //checking if pressed button is 'enter'
       if (e.which == 13 && e.target.value.trim()) {
-        this.dataManager.addFilter(e.target.value);
+        this.dataManager.addFilter(e.target.value.trim());
         this.drawTable();
         e.preventDefault();
       }
@@ -191,12 +236,33 @@ class Table {
     this.rootRef.querySelector('tbody').addEventListener('click',(e) => {
       if(e.target.classList.contains('update-button')){
         this.currentIndex = e.target.parentNode.parentNode.id;
-        this.currentProduct = this.dataManager.getData()[this.currentIndex];
+        this.currentProduct = this.dataManager.getItemByIndex(this.currentIndex);
         modalManager.add({ type: 'AddUpdate', render: this.fillInUpdateForm, onSuccess: this.update });
         modalManager.show();
         this.fillInUpdateForm();
+        this.subscribeInputPrice();
       }
     })
+  }
+
+  subscribeInputPrice = () => {
+    document.getElementById('price').addEventListener('focus',(e) => {
+      e.target.value = this.getPriceFromFormat(e.target.value);
+    });
+    document.getElementById('price').addEventListener('blur',(e) => {
+      e.target.value = this.formatCurrency(e.target.value);
+    });
+  }
+
+  getPriceFromFormat = (formattedPrice) => {
+    if(!formattedPrice){
+      return '';
+    }
+    let numberRegex = /([0-9.])/g;
+    if (this.language === 'RUS') {
+      numberRegex = /([0-9,])/g;
+    }
+    return formattedPrice.match(numberRegex).join('').replace(',','.');
   }
 
   subscribeCloseButton = () =>{
@@ -210,7 +276,7 @@ class Table {
    document.getElementById('name').value = this.currentProduct.name;
    document.getElementById('serialNumber').value = this.currentProduct.serialNumber;
    document.getElementById('count').value = this.currentProduct.count || 0;
-   document.getElementById('price').value = this.currentProduct.price || '-.--' ;
+   document.getElementById('price').value = this.formatCurrency(this.currentProduct.price);
    document.getElementById('isAvaliable').checked = this.currentProduct.isAvaliable || false;
    document.getElementById('date').value = this.currentProduct.dateAdded;
   }
@@ -220,8 +286,17 @@ class Table {
     this.add();
   }
 
-  subscribeAddButton(){
-    this.rootRef.querySelector('#addRow').addEventListener('click',(e) => {
+  subscribeAddButton = () => {
+    document.getElementById('addRow').addEventListener('click',(e) => {
+      modalManager.add({ type: 'AddUpdate', render: () => {}, onSuccess: this.add });
+      modalManager.show();
+      this.subscribeInputPrice();
+    })
+  }
+
+  subscribeAddRowFromEmpty = () => {
+    document.getElementById('addRowFromEmpty').addEventListener('click',(e) => {
+      modalManager.stack.pop();
       modalManager.add({ type: 'AddUpdate', render: () => {}, onSuccess: this.add });
       modalManager.show();
     })
@@ -235,28 +310,26 @@ class Table {
     const name = document.getElementById('name').value;
     const serialNumber = document.getElementById('serialNumber').value;
     const count = document.getElementById('count').value;
-    const price = document.getElementById('price').value;
+    const price = this.getPriceFromFormat(document.getElementById('price').value);
     const isAvaliable = document.getElementById('isAvaliable').checked;
     const dateAdded = document.getElementById('date').value;
     return {name, serialNumber, count, price, isAvaliable, dateAdded}
   }
 
-
   subscribeRegionsSwitch = () => {
     document.querySelector('.language').addEventListener('click',(e) => {
-      const previousLanguage = this.language;
-      if(this.language === 'US'){
-        this.language = 'RUS'
-      } else {
-        this.language = 'US';
-      }
-      e.target.innerHTML = this.language;
-      for(let i = 0 ; i<this.dataManager.getData().length; i+= 1)  {
-        document.querySelector('tbody').innerHTML = document.querySelector('tbody').innerHTML.replace(currencySigns[previousLanguage],currencySigns[this.language]);
-      }
+      this.toggleLanguage();
+      this.drawTable();
     });
   }
 
+  toggleLanguage = () => {
+    if(this.language === 'US'){
+      this.language = 'RUS';
+    } else {
+      this.language = 'US';
+    }
+  }
 }
 
 Table.id = 0;
